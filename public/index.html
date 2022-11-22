@@ -1,43 +1,626 @@
+
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="ltr" lang="en" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="ltr" lang="en" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="ltr" lang="en">
+<!--<![endif]-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Allocations</title>
+  <!--<base href="https://allocate-wine.gabsoft.net/" />-->
+  <base href="http://localhost:3000/"/>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+  <!-- Load essential resources -->
+  <!--<script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js"></script>-->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+  <link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<!--    <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js"></script>
+    <script src="catalog/view/theme/basel/js/slick.min.js"></script>
+    <script src="catalog/view/theme/basel/js/basel_common.js" defer></script>-->
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
-</html>
+  <!-- Main stylesheet -->
+  <link href="catalog/view/theme/basel/stylesheet/stylesheet.css" rel="stylesheet">
+  <!--<link href="open_cart_styles/stylesheet/stylesheet.css" rel="stylesheet">-->
+
+
+  <!-- Mandatory Theme Settings CSS -->
+  <!-- <style id="basel-mandatory-css">.top_line {line-height:41px;}.header-main,.header-main .sign-in,#logo {line-height:90px;height:90px;}.sticky-enabled.sticky-active .sticky-header.short:not(.slidedown) .header-main,.sticky-enabled.offset250 .sticky-header.slidedown .header-main,.sticky-enabled.sticky-active .sticky-header.short .header-main .sign-in,.sticky-enabled.sticky-active .sticky-header.short:not(.slidedown) .header-main #logo,.sticky-enabled.sticky-active .header6 .sticky-header.short .header-main #logo {line-height:70px;height:70px;}@media (max-width: 991px) {.header-main,.sticky-enabled.offset250 .sticky-header.slidedown .header-main,#logo,.sticky-enabled.sticky-active .sticky-header.short .header-main #logo {line-height:70px;height:70px;}}.table-cell.menu-cell,.main-menu:not(.vertical) > ul,.main-menu:not(.vertical) > ul > li,.main-menu:not(.vertical) > ul > li > a,.main-menu:not(.vertical) > ul > li.dropdown-wrapper > a .fa-angle-down,.main-menu.vertical .menu-heading {line-height:64px;height:64px;}.sticky-enabled.sticky-active .table-cell.menu-cell:not(.vertical),.sticky-enabled.sticky-active .main-menu:not(.vertical) > ul,.sticky-enabled.sticky-active .main-menu:not(.vertical) > ul > li,.sticky-enabled.sticky-active .main-menu:not(.vertical) > ul > li > a,.sticky-enabled.sticky-active .main-menu:not(.vertical) > ul > li.dropdown-wrapper > a .fa-angle-down {line-height:64px;height:64px;}.full-search-wrapper .search-main input,.full-search-wrapper .search-category select {height:45px;min-height:45px;}@media (min-width: 992px) {.sticky-enabled.sticky-active .header3 .sticky-header-placeholder,.sticky-enabled.offset250 .header5 .header-main {padding-bottom:64px;}}#logo img {max-width:195px;}</style> -->
+  <!-- Plugin Stylesheet(s) -->
+  <link href="catalog/view/theme/default/stylesheet/multiseller.css" rel="stylesheet" media="screen" />
+  <link href="//fonts.googleapis.com/css?family=Karla:400,400i,700,700i%7CLora:400,400i" rel="stylesheet" media="screen" />
+  <!-- Pluing scripts(s) -->
+
+  <script type="text/javascript"> if (!window.console) console = {log: function() {}}; var msconf_account_pagination_limit = '10'; var config_language = 'catalog/view/javascript/multimerch/datatables/lang/en-gb.lng'; var msLanguageDefaults = { ms_account_product_shipping_elsewhere: "Worldwide"} </script>
+
+
+  <!--  <script src="catalog/view/javascript/common.js"></script>
+    <script src="catalog/view/javascript/ms-common.js"></script>-->
+  <!-- Page specific meta information -->
+  <link href="https://allocate-wine.gabsoft.net/image/catalog/android-icon-48x48.png" rel="icon" />
+  <!-- Analytic tools -->
+  <link rel="stylesheet" type="text/css" href="catalog/view/theme/basel/stylesheet/mm.css" media="screen" />
+
+
+  <link rel="stylesheet" type="text/css" href="catalog/view/theme/basel/stylesheet/mms.css" media="screen" />
+</head>
+<body class="account-allocation account_page product-style1 global-cart-bag sticky-enabled home-fixed-header hide_ex_tax cut-names basel-back-btn-disabled widget-title-style2 title_in_bc normal_height_bc">
+
+
+<div id="bg_popup">
+  <div id="popage">
+
+    <div class="verify-window">
+      <div class="left_banner_modal">
+        <img src="\catalog\view\theme\basel\image\neve-in-langa-GrecoVettorello017048.png" alt="left_banner_modal">
+      </div>
+      <div class="content_modal">
+        <div>
+          <img class="m-mb-48" src="\catalog\view\theme\basel\image\allocate-wine-horizontal-logo-original.png" alt="modal-logo">
+          <p>Are you of legal age required by your country or state to purchase and consume alcoholic beverages?</p>
+          <span class="m-mb-48"></span>
+          <div class="buttons l-flex-col l-alihn-center">
+            <div class="button-yes l-mt-8 l-max-w-unset" id="btnConfirmAgeYes">
+              YES                        </div>
+            <div class="button-no l-mt-8 l-max-w-unset" id="btnConfirmAgeNo">
+              NO                        </div>
+          </div>
+          <div class="check-remember">
+            <input type="checkbox" id="remember" class="is-primary" name="scales" checked>
+            <label class="text-16" for="remember">Remember me (unless it is a shared device)</label>
+          </div>
+        </div>
+        <div class="foot_modal">
+          <p>By entering this website, you agree that you are of legal age.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="main-menu-wrapper hidden-md hidden-lg">
+  <ul class="mobile-top">
+    <li class="mobile-lang-curr"></li>
+    <li class="search">
+      <div class="search-holder-mobile">
+        <input type="text" name="search-mobile" value="" placeholder="" class="form-control" /><a class="fa fa-search"></a>
+      </div>
+    </li>
+  </ul>
+  <ul class="categories">
+    <!-- Mega menu -->
+    <!-- Top level items -->
+    <li class=" has-sub dropdown-wrapper from-bottom">
+      <a  class=" ">
+        <span class="top">Accessories</span><i class='fa fa-angle-down'></i></a>
+      <!-- Sub Menu items -->
+      <!-- if full width -->
+      <div class="dropdown-content sub-holder dropdown-left narrow" style="">
+
+
+        <div class="dropdown-inner">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 ">
+              <div class="menu-item">
+                <!-- CATEGORIES CONTENT -->
+                <div class="categories">
+                  <div class="row"><div class="col-sm-12 hover-menu"><ul><li><a href="https://allocate-wine.gabsoft.net/index.php?route=product/category&amp;path=547">Sample Category</a></li><li><a href="https://allocate-wine.gabsoft.net/index.php?route=product/category&amp;path=547">Sample Category</a></li><li class="has-sub dropdown-wrapper from-bottom"><a href="https://allocate-wine.gabsoft.net/index.php?route=product/category&amp;path=547">Sample Category<i class="fa fa-angle-right"></i></a><ul class="dropdown-content sub-holder dropdown-left"><li><a href="https://allocate-wine.gabsoft.net/index.php?route=product/category&amp;path=547">Sample Category</a></li><li><a href="https://allocate-wine.gabsoft.net/index.php?route=product/category&amp;path=547">Sample Category</a></li><li class="has-sub dropdown-wrapper from-bottom"><a href="https://allocate-wine.gabsoft.net/index.php?route=product/category&amp;path=547">Sample Category<i class="fa fa-angle-right"></i></a><ul class="dropdown-content sub-holder dropdown-left"><li><a href="https://allocate-wine.gabsoft.net/index.php?route=product/category&amp;path=547">Sample Category</a></li><li><a href="https://allocate-wine.gabsoft.net/index.php?route=product/category&amp;path=547">Sample Category</a></li></ul></li></ul></li><li><a href="https://allocate-wine.gabsoft.net/index.php?route=product/category&amp;path=547">Sample Category</a></li><li><a href="https://allocate-wine.gabsoft.net/index.php?route=product/category&amp;path=547">Sample Category</a></li><li><a href="https://allocate-wine.gabsoft.net/index.php?route=product/category&amp;path=547">Sample Category</a></li></ul></div></div></div>
+              </div>
+            </div>
+          </div> <!-- row -->
+        </div>
+      </div>
+    </li><!-- Top level items -->
+    <li class="">
+      <a href="index.php?route=extension/blog/home" class=" ">
+        <span class="top">Blog</span></a>
+    </li></ul>
+  <ul class="categories">
+
+  </ul>
+</div>
+<span class="body-cover menu-closer"></span><div class="outer-container main-wrapper">
+  <div class="header-wrapper header3 fixed-header-possible">
+
+    <div class="wine_prefs_notice">
+      <div class="wine_prefs_notice_inner container">
+        <span>Complete your wine preferences to get personalised recommendations from us.</span>
+        <a href="https://allocate-wine.gabsoft.net/account/wine_preferences/"><button class="btn btn-primary">Update</button></a>
+        <span class="close-notice"></span>
+      </div>
+    </div>
+
+    <!-- <span class="table header-main sticky-header-placeholder">&nbsp;</span> -->
+    <div class="outer-container">
+      <div class="header-style">
+        <div class="container w-full max-w-1170 lx-px-24 full-width">
+          <div class="table header-main">
+
+            <!-- <div class="table-cell w40 menu-cell hidden-xs hidden-sm">
+                </div> -->
+
+            <div id="reg-top" class="register hidden-xs mob-hide">
+              <div class="group-l">
+              </div>
+
+              <div class="goup-r">
+                <div class="goup-r-buttons balance-btn">
+                  Balance: €342.25</b></span>
+                </div>
+                <div class="goup-r-buttons account-btn relative">
+                  <a href="https://allocate-wine.gabsoft.net/account/allocation/details/?collector_allocation_id=104" class="is-warning header-warning">&#33;</a>
+                  <a class="pr-0-important pl-16-important" href="/index.php?route=account/account">
+                    <div class="text-12 color-text-white text-bold bg-ligth-brown px-12 ml-0 mr-8">C</div>
+                    Clos De La Roilette                        </a>
+                </div>
+              </div>
+            </div>
+          </div> <!-- .table.header_main ends -->
+        </div> <!-- .container ends -->
+      </div>
+
+      <div class="outer-container menu-style menu-style-contrast ">
+        <div class="headbottom lx-px-24 l-max-w-unset l-justify-between lxs-px-24 l-max-height-56">
+          <div id="myNav" class="overlay">
+            <div class="head-menu">
+              <div class="menu-overlay flex l-px-24 l-mx-auto align-center">
+                <a id="closebtn" class="closebtn">×</a>
+                <a class="flex m-max-w-100" style="width: 200px;" href="/">
+                  <img src="/image/logos/allocate-wine-horizontal-logo-white.svg" />
+                </a>
+              </div>
+            </div>
+            <div class="overlay-content py-24 flex l-mr-24 l-ml-24 l-mx-auto l-pt-0">
+              <ul class="categories-menu">
+                <li>
+                  <a class="events-link" href="https://allocate-wine.gabsoft.net/offers/">Offers</a>
+                </li>
+                <li>
+                  <a class="winemakers-link" href="https://allocate-wine.gabsoft.net/sellers/">Producers</a>
+                </li>
+              </ul>
+            </div>
+            <div class="overlay-content py-24 flex l-mr-24 l-ml-24 l-mx-auto">
+              <div class="register-over">
+                <div class="goup-r-menu">
+                  <div class="goup-r-buttons account-btn">
+                    <div class="goup-r-buttons balance-btn pl-0">
+                      Balance: €342.25</b></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="group-l-menu">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="logoleft flex align-center">
+            <div class="icon-element">
+              <a class="shortcut-wrapper lx-hidden mob-show-inline hidden-lg lxs-ml-0 lxs-pl-0">
+                <i id="icon-menu" class="icon-line-menu icon text-24"></i>
+              </a>
+            </div>
+            <a class="flex m-max-w-100" style="width: 200px;" href="/">
+              <img src="/image/logos/allocate-wine-horizontal-logo-white.svg" />
+            </a>
+          </div>
+          <div class="container cathead">
+            <div class="main-menu text-center">
+              <ul class="categories mob-hide">
+                <li>
+                  <a class="events-link" href="https://allocate-wine.gabsoft.net/offers/">Offers</a>
+                </li>
+                <li>
+                  <a class="winemakers-link" href="https://allocate-wine.gabsoft.net/sellers/">Producers</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="table-cell w40 shortcuts text-right">
+
+            <div class="font-zero">
+
+              <div class="icon-element">
+                <div class="dropdown-wrapper-click from-top ">
+                  <a class="shortcut-wrapper search-trigger from-top clicker color-primary decoration-no">
+                    <i class="icon-magnifier icon"></i>
+                    <i class="fal fa-chevron-left hidden"></i>
+                  </a>
+                  <div class="dropdown-content dropdown-right">
+                    <div class="search-dropdown-holder">
+                      <div class="search-holder">
+                        <div class="search-field search-main">
+                          <input type="text" name="search" value="" placeholder="Search Allocate.Wine" class="form-control main-search-input" />
+                          <span class="btn btn-primary do-search main"><i class="fa fa-search"></i></span>
+                          <span class="clear-search"><i class="fa fa-times" aria-hidden="true"></i></span>
+                        </div>
+                        <script>
+                          $(document).ready(function() {
+                            $('.search-holder-mobile input[name=\'search-mobile\']').attr("placeholder", "Search Allocate.Wine").attr("value", "");
+
+                            $('.clear-search').click(function(){
+                              $('.main-search-input').val('');
+                            });
+                          });
+                        </script> </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white"></div>
+              </div>
+              <div class="icon-element account hide mob-show-inline relative">
+                <a class="pr-0-important" href="/index.php?route=account/account">
+                  <div class="text-16 color-text-white text-bold bg-ligth-brown px-12 mr-16">C</div>
+                </a>
+                <a href="https://allocate-wine.gabsoft.net/account/allocation/details/?collector_allocation_id=104" class="is-warning header-warning-mob">&#33;</a>
+              </div>
+              <div class="icon-element catalog_hide">
+                <div id="cart" class="dropdown-wrapper from-top ">
+                  <a href="https://allocate-wine.gabsoft.net/cart/" class="shortcut-wrapper cart">
+                    <i class="fal fa-ballot-check color-primary text-24"></i>
+                    <span id="cart-total" class="nowrap"><span class="counter cart-total-items">0</span>
+                  </a>
+                  <!-- <div class="dropdown-content dropdown-right hidden-sm hidden-xs">-->
+                  <!-- --><!-- </div>-->
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div> <!-- .header_wrapper ends -->
+
+  <div class="modal-windows">
+    <!-- Modal -->
+    <div id="register-producer" class="modal custom" role="dialog">
+      <div class="modal-window l-full-height l-top">
+        <!-- Modal content-->
+        <div class="window-content">
+          <div class="window-body">
+            <div class="left-banner l-d-none-important">
+              <img src="\catalog\view\theme\basel\image\johny-goerend-pnigODapPek-unsplash.png" alt="producer-register-photo">
+            </div>
+            <div class="right-form l-max-height-unse l-h-fullt">
+              <button type="button" class="close mt-48" data-dismiss="modal">&times;</button>
+              <h4 class="window-title mt-48 sm-text-34 sm-max-w-280">Join as a Producer</h4>
+              <p class="mb-24 white-space-pre-wrap">List and sell your wines to the community on Allocate.Wine.
+                Already have an account?&nbsp;<a class="link-log is-primary" id="form-log" data-dismiss="modal" data-toggle="modal" data-target="#login">Log in</a></p>
+              <div class="ajax-get-register-producer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="register" class="modal custom" role="dialog">
+      <div class="modal-window l-full-height l-top">
+        <!-- Modal content-->
+        <div class="window-content">
+          <div class="window-body">
+            <div class="left-banner l-d-none-important">
+              <img src="\catalog\view\theme\basel\image\Cave-de-reserve1.png" alt="register-photo">
+            </div>
+            <div class="right-form l-max-height-unset l-h-full" id="register-f-resp">
+              <button type="button" class="close mt-48" data-dismiss="modal">&times;</button>
+              <h4 class="window-title mt-48 sm-text-34 sm-max-w-280">Become a Collector</h4>
+              <p class="mb-24 white-space-pre-wrap">Discover and enjoy top quality wines at best value price.
+                Already have an account?&nbsp;<a id="form-log" class="is-primary" data-dismiss="modal" data-toggle="modal" data-target="#login">Log in</a></p>
+              <div class="ajax-get-register"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="login" class="modal custom" role="dialog">
+      <div class="modal-window l-full-height l-top">
+        <!-- Modal content-->
+        <div class="window-content">
+          <div class="window-body l-min-height">
+            <div class="left-banner l-d-none-important">
+              <img src="\catalog\view\theme\basel\image\SHL-Cooperage-4-cropped.png" alt="login-photo">
+            </div>
+            <div class="right-form l-max-height-unset login-block">
+              <button type="button" class="close mt-48" data-dismiss="modal">&times;</button>
+              <h4 class="window-title mt-48 sm-text-34 sm-max-w-280">Welcome back</h4>
+              <p id="text-change" class="mb-0">Log in to continue to Allocate.Wine.</p>
+              <p class="mb-24 white-space-pre-wrap">Not a collector yet?&nbsp;<a id="form-register" class="is-primary" data-dismiss="modal" data-toggle="modal" data-target="#register">Create an account</a></p>
+              <div class="alert alert-danger warning main"></div>
+              <div class="ajax-get-form"></div>
+            </div>
+            <div class="ajax-get-verification right-form l-max-height-unset d-none"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function() {
+      var rememberPage = '';
+      if(rememberPage) {
+        $("#form-log").click();
+      }
+
+      $("#cart #form-log").on('click', function() {
+        $('#text-change').html('Log in to access your allocation request.');
+      });
+
+      $("#reg-top #form-log").on('click', function() {
+        $('#text-change').html('Log in to continue to Allocate.Wine.');
+      });
+    });
+
+  </script>
+
+  <div class="container w-100 mx-0">
+  </div>
+
+  <div class="container mx-0 w-100">
+    <div class="row-edit flex">
+      <div class="account-max-w-center lxs-px-24 l-px-0 l-max-w-unset">
+        <div class="account-left-col mr-48">
+          <div id="column-left" class="column col-sm-4 col-md-3 mt-48 mb-53 m-mb-25">
+            <div class="inner">
+              <div class="list-group mb-48 l-px-24">
+
+                <div class="relative">
+                  <a class="list-group-item" href="https://allocate-wine.gabsoft.net/account/">
+                    <i class="menu-icon"></i>
+                    Overview          </a>
+                </div>
+                <div class="relative">
+                  <a href="https://allocate-wine.gabsoft.net/account/allocation/details/?collector_allocation_id=104" class="is-warning allocation-warning">&#33;</a>                   <a class="list-group-item" href="https://allocate-wine.gabsoft.net/account/allocation/">
+                  <i class="menu-icon"></i>
+                  Allocations         </a>
+                </div>
+                <div class="relative">
+                  <a class="list-group-item" href="https://allocate-wine.gabsoft.net/index.php?route=wine/transaction">
+                    <i class="menu-icon"></i>
+                    Transactions          </a>
+                </div>
+                <div class="relative">
+                  <a class="list-group-item" href="https://allocate-wine.gabsoft.net/index.php?route=wine/invoice">
+                    <i class="menu-icon"></i>
+                    Bank transfers          </a>
+                </div>
+                <div class="relative">
+                  <a class="list-group-item" href="https://allocate-wine.gabsoft.net/index.php?route=wine/bank_details">
+                    <i class="menu-icon"></i>
+                    Bank information          </a>
+                </div>
+                <div class="relative">
+                  <a class="list-group-item" href="https://allocate-wine.gabsoft.net/account/edit/">
+                    <i class="menu-icon"></i>
+                    Personal information          </a>
+                </div>
+                <div class="relative">
+                  <a class="list-group-item" href="https://allocate-wine.gabsoft.net/account/address/">
+                    <i class="menu-icon"></i>
+                    Addresses         </a>
+                </div>
+                <div class="relative">
+                  <a class="list-group-item" href="https://allocate-wine.gabsoft.net/account/wine_preferences/">
+                    <i class="menu-icon"></i>
+                    Wine preferences          </a>
+                </div>
+                <div class="relative">
+                  <a class="list-group-item" href="https://allocate-wine.gabsoft.net/account/communications/">
+                    <i class="menu-icon"></i>
+                    Communications          </a>
+                </div>
+                <div class="relative">
+                  <a class="list-group-item" href="https://allocate-wine.gabsoft.net/account/security/">
+                    <i class="menu-icon"></i>
+                    Security          </a>
+                </div>
+                <div class="relative">
+                  <a class="list-group-item" href="https://allocate-wine.gabsoft.net/account/logout/">
+                    <i class="menu-icon"></i>
+                    Log out         </a>
+                </div>
+              </div>
+
+              <script>
+                // $(document).ready(function() {
+                //   let url = window.location.href;
+                //
+                //   $('#column-left .list-group .list-group-item').each(function() {
+                //     if ((url.indexOf($(this).attr("href")) !== -1)) {
+                //       $(this).addClass('active');
+                //       if($(window).width() < 1025){
+                //         let cloneListItem = $(this).clone();
+                //
+                //         cloneListItem.insertBefore(".list-group")
+                //                 .append('<span class="toggle-angle float-r text-24 color-grey line-h-24"><i class="fal fa-angle-down"></i><span>')
+                //                 .addClass('active').addClass('toggle-menu');
+                //         $(this).removeClass('active');
+                //         if($(this).parent().find('a').hasClass("is-warning")) {
+                //           $(this).parent().find('.is-warning').clone().insertBefore(cloneListItem).addClass('allocation-warning-mob');
+                //         }
+                //         if($('#column-left .list-group-item.active').length > 1) {
+                //           $('#column-left .list-group-item').first().remove('a');
+                //         }
+                //       }
+                //     }
+                //   });
+                //
+                //
+                //   if($('#column-left .list-group .list-group-item.active').length > 1) {
+                //     $('#column-left .list-group .list-group-item').first().removeClass('active');
+                //   }
+                //
+                //   $('.toggle-menu').click(function(e){
+                //     e.preventDefault();
+                //     $('.list-group').toggle();
+                //     $(this).find('.toggle-angle').toggleClass('rotate');
+                //   });
+                // });
+              </script>    </div>
+          </div>
+        </div>
+
+        <div id="content" class="mt-48 container mob-container m-mb-48">
+
+        </div>
+      </div>
+      <div id="allocation-list"></div>
+
+    </div>
+  </div>
+</div>
+</div>
+<!--<script>
+  $('#allocation-list').delegate('.pagination a', 'click', function(e) {
+    e.preventDefault();
+    $('#allocation-list').load(this.href);
+  });
+
+  $('#allocation-list').load('index.php?route=account/allocation/list');
+
+
+  $('.select-status-mob').on("change", function() {
+    const mob_status_id = $("input[name='selected']:checked").val();
+    const search = encodeURIComponent($('#filter-search').val().trim());
+
+    let params = '';
+
+    if (mob_status_id !== '') {
+      params += '&status_id=' + mob_status_id;
+    }
+
+    if (search) {
+      params += '&search=' + search;
+    }
+
+    $('#allocation-list').load('index.php?route=account/allocation/list' + params);
+  })
+
+  $('#filter-search').on('keyup', function(e) {
+    if (e.keyCode === 13) {
+      $(this).blur();
+    }
+  });
+
+  $('#filter-search, #allocation_select').on('change keyup blur input', function() {
+    const mob_status_id = $("input[name='selected']:checked").val();
+    /*const status_id = $('.dropdown-menu').val();*/
+    const status_id = $('#select-status').val();
+    const search = encodeURIComponent($('#filter-search').val().trim());
+
+    let params = '';
+
+    if (status_id !== '') {
+      params += '&status_id=' + status_id;
+    }
+
+    if (mob_status_id !== '') {
+      params += '&status_id=' + mob_status_id;
+    }
+
+    if (search) {
+      params += '&search=' + search;
+    }
+
+    $('#allocation-list').load('index.php?route=account/allocation/list' + params);
+  })
+
+  $("#filter-status-mob").on('click', function(e){
+    $("#filter-m").css("position", "fixed");
+    $("#filter-m").css("display", "flex");
+    $("#filter-m").addClass('open');
+    $('body').addClass('modal-open');
+    $("#filter-m").removeClass('d-none');
+    $(".header3, #footer").toggle();
+  });
+
+  $("#close-filter-status").on('click', function(e){
+    $("#filter-m").addClass('d-none');
+    $("#filter-m").css("display", "none");
+    $("#filter-m").removeClass('open');
+    $('body').removeClass('modal-open');
+    $(".header3, #footer").toggle();
+  });
+
+</script>-->
+<div class="container">
+  <div class="row">
+  </div></div>
+<div class="container">
+</div>
+<div id="footer" class="m-index-1">
+  <div class="container lx-px-24 text-small pt-48 m-pt-24 m-mx-0"><div class="row links-holder m-mx-0 m-max-w-unset l-mx-0">
+    <div class="link-info m-mx-0 l-max-w-unset l-justify-between l-flex-wrap-important">
+      <ul class="m-max-w-250 sm-max-w-130">
+        <legend class="text-12 color-grey mb-8 p-0">Discover</legend>
+        <li>
+          <a href="https://allocate-wine.gabsoft.net/offers/">
+            Offers        </a>
+        </li>
+        <li>
+          <a href="https://allocate-wine.gabsoft.net/sellers/">
+            Producers        </a>
+        </li>
+      </ul>
+      <ul class="ml-16 m-max-w-250 sm-max-w-130 transform-x-30 lx-transform-none">
+        <legend class="text-12 color-grey mb-8 p-0">Company</legend>
+        <li>
+          <a href="https://allocate-wine.gabsoft.net/our-story/">
+            Our story        </a>
+        </li>
+        <li>
+          <a href="https://allocate-wine.gabsoft.net/contact-us/">
+            Contact us        </a>
+        </li>
+      </ul>
+      <ul class="m-max-w-250 sm-max-w-130">
+        <legend class="text-12 color-grey mb-8 p-0 m-mt-24">Support</legend>
+        <li class="hidden"><a href="/index.php?route=information/information&information_id=8">Help center</a></li>
+        <li>
+          <a href="https://allocate-wine.gabsoft.net/terms/?section=returns">
+            Returns        </a>
+        </li>
+        <li>
+          <a href="https://allocate-wine.gabsoft.net/terms/?section=shipping">
+            Shipping        </a>
+        </li>
+      </ul>
+
+    </div>
+    <p class="w-full mt-48 m-mt-24">Drink responsibly and enjoy our products in moderation.</p>
+  </div><!-- .row ends -->
+    <div class="footer-copyright flex justify-between m-flex-col m-align-start m-flex jusctify-between m-w-full m-mx-0 m-max-w-unset">
+      <p>&copy; Allocate.Wine 2022</p>
+      <div class="m-flex m-justify-between m-w-full l-mt-16">
+        <a href="https://allocate-wine.gabsoft.net/privacy-policy/" class="px-15 m-px privacy-policy">
+          Privacy policy    </a>
+        <a href="https://allocate-wine.gabsoft.net/terms/" class="px-15 m-px">
+          Terms & Conditions    </a>
+        <a href="https://allocate-wine.gabsoft.net/privacy-policy/?section=cookies-link" class="px-15 m-px privacy-policy">
+          Cookie policy    </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="root"></div>
+
+
+</div><!-- .outer-container ends -->
+<a class="scroll-to-top primary-bg-color hidden-sm hidden-xs" onclick="$('html, body').animate({scrollTop:0});"><i class="icon-arrow-right"></i></a>
+<div id="featherlight-holder"></div>
+
+</body></html>

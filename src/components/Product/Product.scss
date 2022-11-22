@@ -1,0 +1,42 @@
+.product-item {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  padding: 15px 20px;
+
+  .image {
+    max-width: 108px;
+    width: 100%;
+    height: 108px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  .descr {
+    max-width: 380px;
+    width: 100%;
+    padding: 0 20px;
+    .name {
+      font-size: 16px;
+      color: #B4936A;
+      text-transform: none;
+    }
+    .delivery-option-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 10px;
+      background-color: #e7ecee;
+    }
+  }
+
+  .total {
+    margin-left: auto;
+  }
+
+  .offered {
+    margin-left: auto;
+  }
+}

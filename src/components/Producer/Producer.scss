@@ -1,0 +1,56 @@
+.producer-actions {
+  display: flex;
+  justify-content: space-between;
+  background-color: #EFF2F5;
+  padding: 15px 20px;
+  .left-side {
+    display: flex;
+    align-items: center;
+    .producer-all-check {
+      display: block;
+      padding-right: 15px;
+    }
+    .text{
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.producer-table-titles {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  font-size: 12px;
+  color: #999999;
+  font-weight: 800;
+  .left-side {
+    box-sizing: content-box;
+    padding-left: 60px;
+    max-width: 460px;
+    width: 100%;
+    font-size: 12px;
+    color: #999999;
+  }
+  .right-side {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .requested {
+      max-width: 60px;
+      width: 100%;
+
+    }
+    .offered {
+
+    }
+    .total {
+
+
+    }
+  }
+}
+
+.table-cell {
+  padding: 0 10px;
+}
