@@ -1,35 +1,63 @@
 import React, {useCallback, useEffect} from "react";
 import './App.scss';
 import Producer from "./components/Producer/Producer";
-
 import {useState} from 'react'
-import {UseCallback} from 'react'
 import axios from "axios";
+import {getProducers, setCurrency, addCounter} from "./redux/features/products/producersSlice";
+import {useSelector, useDispatch} from "react-redux";
 
 function App() {
-
-  //console.log('TEst!!!')
-
+    //dispatch for changing state of component
+    //useDispatch() - hook
+    const dispatch = useDispatch()
     const [producers, setProducers] = useState(null);
+    const [currency, setCurrencyApp] = useState(null);
+    //test
+    const [counter, setCounter] = useState(null);
 
-    const fetchProducers = useCallback(async () => {
-        const {data} = await axios.get('http://localhost:3004/producers')
+    function plusCounter () {
+        dispatch(addCounter(setCounter(1)))
+    }
 
-        setProducers(data)
+   // console.log('counter: ', counter)
+    //get producers without slice
+        /*const fetchProducers = useCallback(async () => {
+        const {data} = await axios.get('http://localhost:3004/allocateData')
+        setProducers(data.producers);
+
+        //setState({ producers : data.producers })
+        console.log('store', store)
        // console.log('producers', data)
-
     }, [])
 
     useEffect(() => {
         fetchProducers()
+    }, [fetchProducers]);*/
 
-        console.log('producers', producers)
-    }, [fetchProducers])
+    const fetchProducers = useCallback(async () => {
+        const {data} = await axios.get('http://localhost:3004/allocateData')
+        setProducers(data.producers);
+        setCurrencyApp(data.currency.title)
+        console.log('data', data)
+    }, [])
 
 
+    useEffect(() => {
+        dispatch(getProducers(fetchProducers()))
+        dispatch(setCurrency(currency))
+
+    }, [getProducers])
+
+    //console.log('producers', producers)
 
   return (
     <div className="App">
+        <h1>Currency: {currency}</h1>
+        <div className="counter">
+            <button onClick={() => plusCounter()}>Counter</button>
+            <div>Counter: {counter}</div>
+        </div>
+
         <div className="allocation-top-block">
             <span>Allocations</span>
             <a href='#'>View timeline</a>
@@ -112,7 +140,7 @@ function App() {
 
         <form className="producers-table">
             { producers && producers.map((producer, index) => (
-               <Producer producerData={producer}/>
+               <Producer producerData={producer} key={index}/>
             ))
             }
 

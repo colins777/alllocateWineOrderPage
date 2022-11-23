@@ -53,7 +53,7 @@ const Producer = function ({producerData}) {
             </div>
 
             { producerData.products && producerData.products.map((product, index) => (
-                <Product productData={product}/>
+                <Product productData={product} key={index}/>
             ))
             }
         </div>

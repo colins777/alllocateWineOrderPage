@@ -15,6 +15,8 @@
     }
   }
   .descr {
+    display: flex;
+    flex-direction: column;
     max-width: 380px;
     width: 100%;
     padding: 0 20px;
@@ -25,10 +27,28 @@
     }
     .delivery-option-block {
       display: flex;
-      flex-direction: column;
       justify-content: flex-start;
-      padding: 10px;
-      background-color: #e7ecee;
+      .edit-btn {
+        margin-left: 20px;
+        font-size: 12px;
+        color: #B4936A;
+      }
+    }
+    .option-title {
+      font-size: 12px;
+      color: #007059;
+    }
+  }
+
+  .requested {
+    &-edit {
+      display: flex;
+      max-width: 110px;
+      width: 100%;
+    }
+    &-input {
+      max-width: 50px;
+      width: 100%;
     }
   }
 

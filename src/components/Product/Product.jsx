@@ -18,16 +18,27 @@ const Product = function ({productData}) {
             <div className="descr table-cell">
                 <h4 className="name">{productData.name}</h4>
                 <span className="pack">{productData.price_per_pack}</span>
-                <span>Delivery option:</span>
+                <span className="option-title">Delivery option:</span>
                 <div className="delivery-option-block">
-                    <span>{productData.delivery_option}</span>
-                    <a href="#">Edit</a>
+                    {/*<span>{productData.delivery_option}</span>*/}
+                    <span className="text option-title">Store with Burgundy Wine Bond - 1 qty</span>
+                    <a className="edit-btn">Edit</a>
                 </div>
 
             </div>
 
             <span className="requested table-cell">
-                {productData.requested}
+
+                {productData.offered_allow_edit ?
+                (<div className="requested-edit">
+                    <button>+</button>
+                    <input type="number" className="requested-input"/>
+                    <button>-</button>
+                </div>)
+                : productData.requested
+                }
+
+
             </span>
 
             <span className="offered table-cell">
