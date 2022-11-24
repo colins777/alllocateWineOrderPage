@@ -1,15 +1,28 @@
 import React from "react";
 import "./Product.scss";
-import setTotalCost from "../../redux/features/producers/producersSlice"
-import {useSelector} from "react-redux";
+import {addProdPriceInTotalCost} from "../../redux/features/producers/producersSlice"
+import {useDispatch, useSelector} from "react-redux";
 
 const Product = function ({productData, producerId, currency}) {
+    const dispatch = useDispatch();
+
     const totalCost = useSelector((state) => {
         //return state.producers_data.total_cost;
         return state.producersData.total_cost
-    })
+    });
 
-    console.log('totalCost', totalCost)
+    const prodData = {
+        'product_id': productData.id,
+        'price': 100,
+        producerId
+
+    }
+
+    const addProductClickHandler = () => {
+        dispatch(addProdPriceInTotalCost(prodData))
+           // console.log(productObject)
+    }
+
    // console.log('totalCost', totalCost)
     //console.log('productData', productData)
     return (
@@ -39,12 +52,17 @@ const Product = function ({productData, producerId, currency}) {
 
                 {productData.offered_allow_edit ?
                 (<div className="requested-edit">
-                    <button>+</button>
+                    <button>-</button>
                     <input type="number"
                            className="requested-input"
                            name={'[producerId-' + producerId + '][productId-' + productData.id + ']requested-input'}
                     />
-                    <button>-</button>
+
+                    <button
+                        onClick={(e) => {e.preventDefault(); addProductClickHandler ()}}
+                    >
+                        +
+                    </button>
                 </div>)
                 : productData.requested
                 }

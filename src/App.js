@@ -3,8 +3,8 @@ import './App.scss';
 import Producer from "./components/Producer/Producer";
 import {useState} from 'react'
 import axios from "axios";
-import {getProducers, setCurrency, setTotalCost} from "./redux/features/producers/producersSlice";
-import {useSelector, useDispatch} from "react-redux";
+import {getProducers, setCurrency, setTotalCost, addCounter, setCounter} from "./redux/features/producers/producersSlice";
+import {connect, useSelector, useDispatch} from "react-redux";
 
 function App() {
     //dispatch for changing state of component
@@ -13,7 +13,16 @@ function App() {
     const [producers, setProducers] = useState(null);
     //@TODO currency in redux = null????
     const [currency, setCurrencyApp] = useState(null);
-    const [totalCost, setTotalCostApp] = useState(null);
+    const [totalCost, setTotalCostApp] = useState(null) ;
+
+    //test!!!!!!!!!!!!!!!!!
+    const counter = useSelector(state =>
+           state.producersData.counter
+    )
+
+    const plusCounter = () => {
+        console.log()
+    }
 
     const fetchProducers = useCallback(async () => {
         const {data} = await axios.get('http://localhost:3004/allocateData')
@@ -31,16 +40,19 @@ function App() {
         dispatch(setCurrency(currency))
         dispatch(setTotalCost(totalCost))
 
+        dispatch(setCounter(counter))
+
+
     }, [getProducers])
 
     //console.log('producers', producers)
 
   return (
     <div className="App">
-{/*        <div className="counter">
+        <div className="counter">
             <button onClick={() => plusCounter()}>Counter</button>
             <div>Counter: {counter}</div>
-        </div>*/}
+        </div>
 
         <div className="allocation-top-block">
             <span>Allocations</span>

@@ -10,6 +10,7 @@ const initialState = {
     storage_fee: 0,
     total_cost : 0,
     loading: true,
+    counter: 10
 };
 
 export const getProducers = createAsyncThunk(
@@ -18,9 +19,9 @@ export const getProducers = createAsyncThunk(
         try {
             const {data} = await axios.get('http://localhost:3004/allocateData')
             dispatch(setProducers(data.producers))
-
             dispatch(setCurrency(data.currency))
             dispatch(setTotalCost(data.offer_summary.total_cost))
+
 
 
             console.log('producers slice', data.producers)
@@ -62,7 +63,20 @@ export const producersSlice = createSlice({
            // state.total_cost = state.total_cost + action.payload
             state.total_cost = action.payload
         },
+        addProdPriceInTotalCost: (state, action) => {
+            console.log('state', state)
+            console.log('action', action)
+
+            state.total_cost = state.total_cost + action.payload.price
+
+            state.counter = state.counter + action.payload.price
+
+        },
         //test
+        setCounter: (state, action) => {
+            state.counter = state.counter
+        },
+
         addCounter: (state, action) => {
             state.counter = state.counter + action.payload
 
@@ -85,6 +99,6 @@ export const producersSlice = createSlice({
     },
 });
 //redux saving methods in action object
-export const {setProducers, setCurrency, setSubtotal, setShippingCost, setStorageFee, setTotalCost, addCounter} = producersSlice.actions
+export const {setProducers, setCurrency, setSubtotal, setShippingCost, setStorageFee, setTotalCost, addProdPriceInTotalCost, addCounter, setCounter} = producersSlice.actions
 
 export default producersSlice.reducer
