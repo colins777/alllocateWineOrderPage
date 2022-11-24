@@ -1,8 +1,9 @@
 import React from "react";
 import "./Producer.scss"
 import Product from "../Product/Product";
+import {useSelector} from "react-redux";
 
-const Producer = function ({producerData}) {
+const Producer = function ({producerData, producerId, currency}) {
 
   //  console.log('producerData', producerData)
 
@@ -53,7 +54,11 @@ const Producer = function ({producerData}) {
             </div>
 
             { producerData.products && producerData.products.map((product, index) => (
-                <Product productData={product} key={index}/>
+                <Product productData={product}
+                         producerId={producerId}
+                         key={index}
+                        currency={currency}
+                />
             ))
             }
         </div>

@@ -1,6 +1,6 @@
 //for split all reducers in one parent reducer
 import {combineReducers} from 'redux';
-import producersSlice from "./features/products/producersSlice";
+import producersSlice from "./features/producers/producersSlice";
 
 const rootReducer = combineReducers({
     producersSlice

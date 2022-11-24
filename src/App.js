@@ -3,7 +3,7 @@ import './App.scss';
 import Producer from "./components/Producer/Producer";
 import {useState} from 'react'
 import axios from "axios";
-import {getProducers, setCurrency, addCounter} from "./redux/features/products/producersSlice";
+import {getProducers, setCurrency, setTotalCost} from "./redux/features/producers/producersSlice";
 import {useSelector, useDispatch} from "react-redux";
 
 function App() {
@@ -11,33 +11,17 @@ function App() {
     //useDispatch() - hook
     const dispatch = useDispatch()
     const [producers, setProducers] = useState(null);
+    //@TODO currency in redux = null????
     const [currency, setCurrencyApp] = useState(null);
-    //test
-    const [counter, setCounter] = useState(null);
-
-    function plusCounter () {
-        dispatch(addCounter(setCounter(1)))
-    }
-
-   // console.log('counter: ', counter)
-    //get producers without slice
-        /*const fetchProducers = useCallback(async () => {
-        const {data} = await axios.get('http://localhost:3004/allocateData')
-        setProducers(data.producers);
-
-        //setState({ producers : data.producers })
-        console.log('store', store)
-       // console.log('producers', data)
-    }, [])
-
-    useEffect(() => {
-        fetchProducers()
-    }, [fetchProducers]);*/
+    const [totalCost, setTotalCostApp] = useState(null);
 
     const fetchProducers = useCallback(async () => {
         const {data} = await axios.get('http://localhost:3004/allocateData')
+
         setProducers(data.producers);
         setCurrencyApp(data.currency.title)
+        setTotalCostApp(data.offer_summary.total_cost)
+
         console.log('data', data)
     }, [])
 
@@ -45,6 +29,7 @@ function App() {
     useEffect(() => {
         dispatch(getProducers(fetchProducers()))
         dispatch(setCurrency(currency))
+        dispatch(setTotalCost(totalCost))
 
     }, [getProducers])
 
@@ -52,11 +37,10 @@ function App() {
 
   return (
     <div className="App">
-        <h1>Currency: {currency}</h1>
-        <div className="counter">
+{/*        <div className="counter">
             <button onClick={() => plusCounter()}>Counter</button>
             <div>Counter: {counter}</div>
-        </div>
+        </div>*/}
 
         <div className="allocation-top-block">
             <span>Allocations</span>
@@ -140,10 +124,79 @@ function App() {
 
         <form className="producers-table">
             { producers && producers.map((producer, index) => (
-               <Producer producerData={producer} key={index}/>
+               <Producer producerData={producer}
+                         producerId={producer.id}
+                         currency={currency}
+                         key={index}
+               />
             ))
             }
 
+            <div className="expert-advices">
+                <div className="icon">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        x="0"
+                        y="0"
+                        enableBackground="new 0 0 302.967 302.967"
+                        version="1.1"
+                        viewBox="0 0 302.967 302.967"
+                        xmlSpace="preserve"
+                    >
+                        <path
+                            fill="#010002"
+                            d="M151.483 302.967C67.956 302.967 0 235.017 0 151.483S67.956 0 151.483 0s151.483 67.956 151.483 151.483-67.949 151.484-151.483 151.484zm0-278.551c-70.066 0-127.067 57.001-127.067 127.067S81.417 278.55 151.483 278.55 278.55 221.549 278.55 151.483 221.555 24.416 151.483 24.416z"
+                        ></path>
+                        <path
+                            fill="#010002"
+                            d="M116.586 118.12c1.795-4.607 4.297-8.588 7.511-11.961 3.225-3.389 7.114-6.016 11.667-7.898 4.547-1.904 9.633-2.845 15.262-2.845 7.261 0 13.32.995 18.183 2.997 4.857 1.996 8.768 4.482 11.738 7.441 2.964 2.97 5.091 6.168 6.369 9.584 1.273 3.432 1.915 6.636 1.915 9.595 0 4.901-.642 8.947-1.915 12.118-1.278 3.171-2.866 5.88-4.759 8.131-1.898 2.252-3.987 4.172-6.293 5.755a147.159 147.159 0 00-6.516 4.759 30.34 30.34 0 00-5.445 5.439c-1.588 2.04-2.589 4.601-2.991 7.664v5.831H140.6v-6.908c.305-4.395 1.153-8.072 2.529-11.036 1.382-2.964 2.991-5.499 4.83-7.598 1.844-2.089 3.786-3.911 5.836-5.445a105.25 105.25 0 005.673-4.591c1.73-1.545 3.144-3.225 4.221-5.069 1.071-1.833 1.556-4.15 1.452-6.908 0-4.705-1.148-8.18-3.454-10.427-2.295-2.257-5.493-3.378-9.589-3.378-2.758 0-5.134.533-7.131 1.605s-3.628 2.513-4.911 4.302c-1.278 1.795-2.225 3.894-2.834 6.288-.615 2.415-.919 4.982-.919 7.756h-22.55c.097-5.536 1.038-10.589 2.833-15.201zm45.95 65.818v23.616h-24.09v-23.616h24.09z"
+                        ></path>
+                    </svg>
+                </div>
+
+                    <div className="expert-advices__content">
+                        <h3 class="expert-advices__title">
+                            NEED SOME EXPERT ADVICES?
+                        </h3>
+                        <div className="expert-advices__text">
+                            <span className="expert-advices__top">Contact our relationship managers at </span>
+                            <a href="mailto:hello@allocate.wine" className="expert-advices__mail">hello@allocate.wine</a>
+                        </div>
+                    </div>
+
+            </div>
+
+            <div className="offer-summary">
+                <div className="block-title">
+                    ALLOCATION OFFER SUMMARY
+                </div>
+                <div className="offer-summary__content">
+                    <div className="offer-summary__row">
+                        <span className="subtotal-title">Subtotal</span>
+                        <span className="subtotal-summ">€8,642.40</span>
+                    </div>
+
+                    <div className="offer-summary__row shipping-block">
+                        <div className="shipping-rows">
+                            <span>Indicative shipping cost (More details)</span>
+                            <span>Indicative shipping cost ( (inclusive of insurance, duties, and taxes when applicable)</span>
+                            <p>Shipping rates shown are based on air freight and are subject to change given the ongoing volatility in global logistics. Option for sea freight may also be available.</p>
+                            <a className="shipping-policy-link">View our shipping policy</a>
+                        </div>
+                        <span className="subtotal-summ">€401.60</span>
+                    </div>
+
+                    <div className="offer-summary__row">
+                        <span className="subtotal-title">Storage fee (<span className="more-details">More details</span>)</span>
+                        <span className="subtotal-summ">€450.00</span>
+                    </div>
+
+                    <div className="offer-summary__row total-allocation">
+                        <span className="total-allocation__title">Total allocation offer</span>
+                        <span className="total-allocation__summ">{currency}{totalCost}</span>
+                    </div>
+                </div>
+            </div>
         </form>
 
     </div>

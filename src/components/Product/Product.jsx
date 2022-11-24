@@ -1,8 +1,16 @@
 import React from "react";
-import "./Product.scss"
+import "./Product.scss";
+import setTotalCost from "../../redux/features/producers/producersSlice"
+import {useSelector} from "react-redux";
 
-const Product = function ({productData}) {
+const Product = function ({productData, producerId, currency}) {
+    const totalCost = useSelector((state) => {
+        //return state.producers_data.total_cost;
+        return state.producersData.total_cost
+    })
 
+    console.log('totalCost', totalCost)
+   // console.log('totalCost', totalCost)
     //console.log('productData', productData)
     return (
         <div className="product-item">
@@ -32,13 +40,14 @@ const Product = function ({productData}) {
                 {productData.offered_allow_edit ?
                 (<div className="requested-edit">
                     <button>+</button>
-                    <input type="number" className="requested-input"/>
+                    <input type="number"
+                           className="requested-input"
+                           name={'[producerId-' + producerId + '][productId-' + productData.id + ']requested-input'}
+                    />
                     <button>-</button>
                 </div>)
                 : productData.requested
                 }
-
-
             </span>
 
             <span className="offered table-cell">
@@ -46,7 +55,7 @@ const Product = function ({productData}) {
             </span>
 
             <div className="total table-cell">
-                € {productData.total_sum}
+                {currency} {productData.total_sum}
             </div>
         </div>
     )
