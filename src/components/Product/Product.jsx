@@ -1,6 +1,6 @@
 import React from "react";
 import "./Product.scss";
-import {addProdPriceInTotalCost} from "../../redux/features/producers/producersSlice"
+import {addProdPriceInTotalCost, minusProdPriceInTotalCost} from "../../redux/features/producers/producersSlice"
 import {useDispatch, useSelector} from "react-redux";
 
 const Product = function ({productData, producerId, currency}) {
@@ -13,14 +13,19 @@ const Product = function ({productData, producerId, currency}) {
 
     const prodData = {
         'product_id': productData.id,
-        'price': 100,
+        'price': productData.price,
         producerId
 
-    }
+    };
 
     const addProductClickHandler = () => {
         dispatch(addProdPriceInTotalCost(prodData))
            // console.log(productObject)
+    };
+
+    const minusProductClickHandler = () => {
+        dispatch(minusProdPriceInTotalCost(prodData))
+        // console.log(productObject)
     }
 
    // console.log('totalCost', totalCost)
@@ -38,7 +43,7 @@ const Product = function ({productData, producerId, currency}) {
             
             <div className="descr table-cell">
                 <h4 className="name">{productData.name}</h4>
-                <span className="pack">{productData.price_per_pack}</span>
+                <span className="pack">{productData.price} {productData.price_per_pack}</span>
                 <span className="option-title">Delivery option:</span>
                 <div className="delivery-option-block">
                     {/*<span>{productData.delivery_option}</span>*/}
@@ -52,10 +57,14 @@ const Product = function ({productData, producerId, currency}) {
 
                 {productData.offered_allow_edit ?
                 (<div className="requested-edit">
-                    <button>-</button>
+                    <button
+                        onClick={(e) => {e.preventDefault(); minusProductClickHandler ()}}
+                    >-
+                    </button>
                     <input type="number"
                            className="requested-input"
                            name={'[producerId-' + producerId + '][productId-' + productData.id + ']requested-input'}
+                           /*value={productData.requested}*/
                     />
 
                     <button

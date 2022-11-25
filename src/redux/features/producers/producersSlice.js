@@ -4,11 +4,11 @@ import {useCallback} from "react";
 
 const initialState = {
     producers: [],
-    currency: 0,
+    currency: '€',
     subtotal: 0,
     shipping_cost: 0,
     storage_fee: 0,
-    total_cost : 0,
+    total_cost : 1200,
     loading: true,
     counter: 10
 };
@@ -18,13 +18,14 @@ export const getProducers = createAsyncThunk(
     async (_, {rejectWithValue, dispatch} ) => {
         try {
             const {data} = await axios.get('http://localhost:3004/allocateData')
-            dispatch(setProducers(data.producers))
-            dispatch(setCurrency(data.currency))
-            dispatch(setTotalCost(data.offer_summary.total_cost))
-
-
-
+            // dispatch(setProducers(data.producers))
+            // dispatch(setCurrency(data.currency))
+            // dispatch(setTotalCost(data.offer_summary.total_cost))
             console.log('producers slice', data.producers)
+            return data.producers;
+
+
+
         } catch (e) {
             console.log('Error: ', e)
         }
@@ -43,7 +44,6 @@ export const producersSlice = createSlice({
         //action setProducers
         setProducers: (state, action) => {
             state.producers = action.payload
-            //state.currency = action.currency
         },
         setCurrency: (state, action) => {
            state.currency = action.payload
@@ -69,7 +69,18 @@ export const producersSlice = createSlice({
 
             state.total_cost = state.total_cost + action.payload.price
 
-            state.counter = state.counter + action.payload.price
+            //test
+            //state.counter = state.counter + action.payload.price
+
+        },
+        minusProdPriceInTotalCost: (state, action) => {
+            console.log('state', state)
+            console.log('action', action)
+
+            state.total_cost = state.total_cost - action.payload.price
+
+            //test
+            //state.counter = state.counter + action.payload.price
 
         },
         //test
@@ -84,7 +95,7 @@ export const producersSlice = createSlice({
             console.log('action.payload', action.payload)
         }
     },
-    extraReducers: {
+/*    extraReducers: {
         [getProducers.pending]: (state) => {
             state.loading = true
         },
@@ -96,9 +107,15 @@ export const producersSlice = createSlice({
         [getProducers.rejected]: (state) => {
             state.loading = false
         }
-    },
+    },*/
+    extraReducers: (builder) => {
+        builder.addCase(getProducers.fulfilled,  (state, action) => {
+            state.producers = action.payload
+            console.log('state.producers', action.payload)
+        },)
+    }
 });
 //redux saving methods in action object
-export const {setProducers, setCurrency, setSubtotal, setShippingCost, setStorageFee, setTotalCost, addProdPriceInTotalCost, addCounter, setCounter} = producersSlice.actions
+export const {setProducers, setCurrency, setSubtotal, setShippingCost, setStorageFee, setTotalCost, addProdPriceInTotalCost, minusProdPriceInTotalCost, addCounter, setCounter} = producersSlice.actions
 
 export default producersSlice.reducer

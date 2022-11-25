@@ -10,10 +10,18 @@ function App() {
     //dispatch for changing state of component
     //useDispatch() - hook
     const dispatch = useDispatch()
-    const [producers, setProducers] = useState(null);
-    //@TODO currency in redux = null????
-    const [currency, setCurrencyApp] = useState(null);
-    const [totalCost, setTotalCostApp] = useState(null) ;
+
+    const producers = useSelector(state =>
+        state.producersData.producers
+    );
+
+    const currency = useSelector(state =>
+        state.producersData.currency
+    );
+
+    const totalCost = useSelector(state =>
+        state.producersData.total_cost
+    );
 
     //test!!!!!!!!!!!!!!!!!
     const counter = useSelector(state =>
@@ -24,28 +32,14 @@ function App() {
         console.log()
     }
 
-    const fetchProducers = useCallback(async () => {
-        const {data} = await axios.get('http://localhost:3004/allocateData')
-
-        setProducers(data.producers);
-        setCurrencyApp(data.currency.title)
-        setTotalCostApp(data.offer_summary.total_cost)
-
-        console.log('data', data)
-    }, [])
 
 
     useEffect(() => {
-        dispatch(getProducers(fetchProducers()))
+        // dispatch(setCounter(counter))
+        dispatch(getProducers())
         dispatch(setCurrency(currency))
         dispatch(setTotalCost(totalCost))
-
-        dispatch(setCounter(counter))
-
-
-    }, [getProducers])
-
-    //console.log('producers', producers)
+    }, []);
 
   return (
     <div className="App">
@@ -167,7 +161,7 @@ function App() {
                 </div>
 
                     <div className="expert-advices__content">
-                        <h3 class="expert-advices__title">
+                        <h3 className="expert-advices__title">
                             NEED SOME EXPERT ADVICES?
                         </h3>
                         <div className="expert-advices__text">
@@ -206,6 +200,7 @@ function App() {
                     <div className="offer-summary__row total-allocation">
                         <span className="total-allocation__title">Total allocation offer</span>
                         <span className="total-allocation__summ">{currency}{totalCost}</span>
+                        <input type="hidden" name="allocation_total_summ" value={totalCost}/>
                     </div>
                 </div>
             </div>
