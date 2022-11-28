@@ -1,44 +1,32 @@
 import React, {useCallback, useEffect} from "react";
 import './App.scss';
 import Producer from "./components/Producer/Producer";
-import {useState} from 'react'
-import axios from "axios";
 import {getProducers, setCurrency, setTotalCost, addCounter, setCounter} from "./redux/features/producers/producersSlice";
-import {connect, useSelector, useDispatch} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 
 function App() {
     //dispatch for changing state of component
     //useDispatch() - hook
     const dispatch = useDispatch()
 
-    const producers = useSelector(state =>
-        state.producersData.producers
-    );
+    const producers = useSelector(state => state.producersData.producers);
+    const currency = useSelector(state => state.producersData.currency);
+    const totalCost = useSelector(state => state.producersData.total_cost);
+    const isLoading = useSelector(state => state.producersData.loading)
 
-    const currency = useSelector(state =>
-        state.producersData.currency
-    );
-
-    const totalCost = useSelector(state =>
-        state.producersData.total_cost
-    );
-
+    console.log('state.producersData.producers', useSelector(state => state.producersData.producers));
     //test!!!!!!!!!!!!!!!!!
     const counter = useSelector(state =>
            state.producersData.counter
-    )
+    );
+
 
     const plusCounter = () => {
         console.log()
     }
 
-
-
     useEffect(() => {
-        // dispatch(setCounter(counter))
         dispatch(getProducers())
-        dispatch(setCurrency(currency))
-        dispatch(setTotalCost(totalCost))
     }, []);
 
   return (
@@ -127,6 +115,7 @@ function App() {
             </div>
         </div>
 
+        {isLoading && <h1>Form loading...</h1>}
 
         <form className="producers-table">
             { producers && producers.map((producer, index) => (

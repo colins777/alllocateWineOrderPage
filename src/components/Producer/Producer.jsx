@@ -18,7 +18,7 @@ const Producer = function ({producerData, producerId, currency}) {
 
                     <div className="text">
                         <span className="title">Requested producer</span>
-                        <span className="producer-name">BASS PHILLIP</span>
+                        <span className="producer-name">{producerData.name}</span>
                     </div>
                 </div>
 

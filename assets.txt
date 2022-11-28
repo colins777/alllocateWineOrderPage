@@ -2,3 +2,13 @@ https://allocate-wine.gabsoft.net/account/wine_preferences/
 
 Redux toolkit  pizza shop
 https://youtu.be/h1Q2V2Ek0EQ?list=PL0FGkDGJQjJG9eI85xM1_iLIf6BcEdaNl&t=755
+
+Run server:
+npm run server
+
+//state pizza react
+16 - 30 min
+
+
+Redux immutable practice
+https://blog.logrocket.com/redux-immutable-update-patterns/
