@@ -1,11 +1,13 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import "./Product.scss";
-import {addProdPriceInTotalCost, minusProdPriceInTotalCost} from "../../redux/features/producers/producersSlice"
+import {addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty} from "../../redux/features/producers/producersSlice"
 import {useDispatch, useSelector} from "react-redux";
 
 const Product = function ({productData, producerId, currency}) {
     const dispatch = useDispatch();
-    const [requestedQty, setRequestQty] = useState('')
+
+    //const requestedQty = productData.requested;
+    const offeredQty = productData.offered;
     const producerData = useSelector((state) => {
         return state.producersData.producers
     });
@@ -39,10 +41,16 @@ const Product = function ({productData, producerId, currency}) {
         'price': productData.price,
         'producerIndex': getProducerIndex(),
         'productIndex': getProductIndex(),
+        'offered_qty': productData.offered,
         producerId,
     };
 
-    const addProductClickHandler = () => {
+   // const offeredProductInput = useRef(null);
+    const addProductClickHandler = (inputValue) => {
+
+       // offeredProductInput.value = +offeredProductInput.value++;
+       // console.log('offeredProductInput.current.value', offeredProductInput)
+
         dispatch(addProdPriceInTotalCost(productDataAction))
            // console.log(productObject)
     };
@@ -50,7 +58,12 @@ const Product = function ({productData, producerId, currency}) {
     const minusProductClickHandler = () => {
         dispatch(minusProdPriceInTotalCost(productDataAction))
         // console.log(productObject)
-    }
+    };
+
+    const setOfferedQtyHandler = (qty) => {
+        const actionData = {...productDataAction, 'offered_qty' : +qty }
+        dispatch(setOfferedQty(actionData))
+    };
 
    // console.log('totalCost', totalCost)
     //console.log('productData', productData)
@@ -93,12 +106,12 @@ const Product = function ({productData, producerId, currency}) {
                         <input type="number"
                                className="requested-input"
                                name={'[producerId-' + producerId + '][productId-' + productData.id + ']requested-input'}
-                               value={requestedQty}
-                               onChange={(e) => {setRequestQty(e.target.value)}}
+                               value={offeredQty}
+                               onChange={(e) => setOfferedQtyHandler(e.target.value)}
                         />
 
                         <button
-                            onClick={(e) => {e.preventDefault(); addProductClickHandler ()}}
+                            onClick={(e) => {e.preventDefault(); addProductClickHandler (e.target.value)}}
                         >
                             +
                         </button>

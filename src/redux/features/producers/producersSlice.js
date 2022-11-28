@@ -68,6 +68,12 @@ export const producersSlice = createSlice({
             //state.producers[0].products[0].total_sum = 1
             state.producers[action.payload.producerIndex].products[action.payload.productIndex].total_sum
                 += state.producers[action.payload.producerIndex].products[action.payload.productIndex].price
+
+            //console.log('action.payload', action.payload)
+            state.producers[action.payload.producerIndex].products[action.payload.productIndex].offered
+                += 1
+
+            state.subtotal += state.producers[action.payload.producerIndex].products[action.payload.productIndex].price
         },
         minusProdPriceInTotalCost: (state, action) => {
             //console.log('state', state)
@@ -75,10 +81,23 @@ export const producersSlice = createSlice({
             state.total_cost = state.total_cost - action.payload.price
             state.producers[action.payload.producerIndex].products[action.payload.productIndex].total_sum
                 -= state.producers[action.payload.producerIndex].products[action.payload.productIndex].price
+            //minus 1 item
+            state.producers[action.payload.producerIndex].products[action.payload.productIndex].offered
+                -= 1
 
-            //test
-            //state.counter = state.counter + action.payload.price
-
+            state.subtotal -= state.producers[action.payload.producerIndex].products[action.payload.productIndex].price
+        },
+        setOfferedQty : (state, action) => {
+            console.log('action', action)
+            //change offered qty
+            state.producers[action.payload.producerIndex].products[action.payload.productIndex].offered =
+                action.payload.offered_qty;
+            //total sum of current product
+            state.producers[action.payload.producerIndex].products[action.payload.productIndex].total_sum =
+                action.payload.offered_qty * state.producers[action.payload.producerIndex].products[action.payload.productIndex].price;
+            //Total sum of all products
+            state.total_cost += action.payload.offered_qty * state.producers[action.payload.producerIndex].products[action.payload.productIndex].price
+            state.subtotal += action.payload.offered_qty * state.producers[action.payload.producerIndex].products[action.payload.productIndex].price
         },
         //test
         setCounter: (state, action) => {
@@ -100,9 +119,15 @@ export const producersSlice = createSlice({
         [getProducers.fulfilled]: (state, action) => {
                     state.producers = action.payload.producers;
                     state.currency = action.payload.currency.title;
+                    state.subtotal = action.payload.offer_summary.subtotal;
                     state.total_cost = action.payload.offer_summary.total_cost;
-                    console.log('action.payload data', action.payload);
+                    state.shipping_cost = action.payload.offer_summary.shipping_cost;
+                    state.storage_fee = action.payload.offer_summary.storage_fee;
+
+                    //console.log('action.payload data', action.payload);
                     state.loading = false
+
+            console.log('payload Back', action.payload)
         },
         [getProducers.rejected]: (state) => {
             state.loading = false
@@ -118,6 +143,7 @@ export const producersSlice = createSlice({
     // }
 });
 //redux saving methods in action object
-export const {setProducers, setCurrency, setSubtotal, setShippingCost, setStorageFee, setTotalCost, addProdPriceInTotalCost, minusProdPriceInTotalCost, addCounter, setCounter} = producersSlice.actions
+export const {setProducers, setCurrency, setSubtotal, setShippingCost, setStorageFee,
+    setTotalCost, addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, addCounter, setCounter} = producersSlice.actions
 
 export default producersSlice.reducer

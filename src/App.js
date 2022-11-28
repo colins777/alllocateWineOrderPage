@@ -7,19 +7,23 @@ import {useSelector, useDispatch} from "react-redux";
 function App() {
     //dispatch for changing state of component
     //useDispatch() - hook
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const producers = useSelector(state => state.producersData.producers);
     const currency = useSelector(state => state.producersData.currency);
     const totalCost = useSelector(state => state.producersData.total_cost);
-    const isLoading = useSelector(state => state.producersData.loading)
+    const storageFee = useSelector(state => state.producersData.storage_fee);
+    const isLoading = useSelector(state => state.producersData.loading);
+    const subtotal = useSelector(state =>
+        state.producersData.subtotal);
 
-    console.log('state.producersData.producers', useSelector(state => state.producersData.producers));
+   // const {producers, currency, totalCost, isLoading, subtotal } = useSelector(state => state.producersData);
+
+    console.log('state.producersData.producers', useSelector(state => state.producersData));
     //test!!!!!!!!!!!!!!!!!
     const counter = useSelector(state =>
            state.producersData.counter
     );
-
 
     const plusCounter = () => {
         console.log()
@@ -168,7 +172,7 @@ function App() {
                 <div className="offer-summary__content">
                     <div className="offer-summary__row">
                         <span className="subtotal-title">Subtotal</span>
-                        <span className="subtotal-summ">€8,642.40</span>
+                        <span className="subtotal-summ">{currency}{subtotal}</span>
                     </div>
 
                     <div className="offer-summary__row shipping-block">
@@ -178,12 +182,12 @@ function App() {
                             <p>Shipping rates shown are based on air freight and are subject to change given the ongoing volatility in global logistics. Option for sea freight may also be available.</p>
                             <a className="shipping-policy-link">View our shipping policy</a>
                         </div>
-                        <span className="subtotal-summ">€401.60</span>
+                        <span className="subtotal-summ">{currency}401.60</span>
                     </div>
 
                     <div className="offer-summary__row">
                         <span className="subtotal-title">Storage fee (<span className="more-details">More details</span>)</span>
-                        <span className="subtotal-summ">€450.00</span>
+                        <span className="subtotal-summ">{currency}{storageFee}</span>
                     </div>
 
                     <div className="offer-summary__row total-allocation">
