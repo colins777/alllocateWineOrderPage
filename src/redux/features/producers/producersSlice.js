@@ -1,7 +1,5 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-//import {store} from "../../store";
-import {useCallback} from "react";
 
 const initialState = {
     producers: [],
@@ -11,7 +9,7 @@ const initialState = {
     storage_fee: 0,
     total_cost : 0,
     loading: true,
-    counter: 10
+    declined: false
 };
 
 export const getProducers = createAsyncThunk(
@@ -64,10 +62,9 @@ export const producersSlice = createSlice({
         },
         addProdPriceInTotalCost: (state, action) => {
            //console.log('currentState', state.producers)
-            state.total_cost = state.total_cost + action.payload.price
-            //state.producers[0].products[0].total_sum = 1
+            state.total_cost = state.total_cost + action.payload.price;
             state.producers[action.payload.producerIndex].products[action.payload.productIndex].total_sum
-                += state.producers[action.payload.producerIndex].products[action.payload.productIndex].price
+                += state.producers[action.payload.producerIndex].products[action.payload.productIndex].price;
 
             //console.log('action.payload', action.payload)
             state.producers[action.payload.producerIndex].products[action.payload.productIndex].offered
@@ -76,19 +73,17 @@ export const producersSlice = createSlice({
             state.subtotal += state.producers[action.payload.producerIndex].products[action.payload.productIndex].price
         },
         minusProdPriceInTotalCost: (state, action) => {
-            //console.log('state', state)
-           // console.log('action', action)
-            state.total_cost = state.total_cost - action.payload.price
-            state.producers[action.payload.producerIndex].products[action.payload.productIndex].total_sum
-                -= state.producers[action.payload.producerIndex].products[action.payload.productIndex].price
-            //minus 1 item
-            state.producers[action.payload.producerIndex].products[action.payload.productIndex].offered
-                -= 1
+            const producerIndex = state.producers[action.payload.producerIndex];
+            const productIndex = producerIndex.products[action.payload.productIndex];
 
-            state.subtotal -= state.producers[action.payload.producerIndex].products[action.payload.productIndex].price
+            state.total_cost = state.total_cost - action.payload.price;
+            productIndex.total_sum
+                -= productIndex.price;
+            //minus 1 item
+            productIndex.offered -= 1;
+            state.subtotal -= productIndex.price
         },
         setOfferedQty : (state, action) => {
-            console.log('action', action)
             //change offered qty
             state.producers[action.payload.producerIndex].products[action.payload.productIndex].offered =
                 action.payload.offered_qty;
@@ -99,16 +94,50 @@ export const producersSlice = createSlice({
             state.total_cost += action.payload.offered_qty * state.producers[action.payload.producerIndex].products[action.payload.productIndex].price
             state.subtotal += action.payload.offered_qty * state.producers[action.payload.producerIndex].products[action.payload.productIndex].price
         },
-        //test
-        setCounter: (state, action) => {
-            state.counter = state.counter
+
+        setProductChecked: (state, action) => {
+            //console.log('action', action)
+            state.producers[action.payload.producerIndex].products[action.payload.productIndex].checked = action.payload.product_checked
         },
 
-        addCounter: (state, action) => {
-            state.counter = state.counter + action.payload
+        //Producer Accept/Decline
+        setAcceptDeclineProducts: (state, action) => {
+            //decline
+            if (action.payload.acceptDecline === 0) {
+                let productsDeclinedSum = 0;
+                state.producers[action.payload.producerIndex].products.map((product, index) => {
+                    console.log(product)
 
-            console.log('state', state.counter)
-            console.log('action.payload', action.payload)
+                    productsDeclinedSum += state.producers[action.payload.producerIndex].products[index].total_sum;
+                    state.producers[action.payload.producerIndex].products[index].total_sum = 0;
+
+                    state.producers[action.payload.producerIndex].products[index].declined = true;
+                })
+
+                state.subtotal = state.subtotal - productsDeclinedSum;
+                state.total_cost = state.total_cost - productsDeclinedSum;
+
+            } else {
+                let productsAcceptedSum = 0;
+                state.producers[action.payload.producerIndex].products.map((product, index) => {
+                    //productsAcceptedSum += state.producers[action.payload.producerIndex].products[index].total_sum;
+
+                    productsAcceptedSum += state.producers[action.payload.producerIndex].products[index].price *
+                        state.producers[action.payload.producerIndex].products[index].offered;
+
+                    state.producers[action.payload.producerIndex].products[index].total_sum = state.producers[action.payload.producerIndex].products[index].price *
+                        state.producers[action.payload.producerIndex].products[index].offered;
+                    ;
+
+                    state.producers[action.payload.producerIndex].products[index].declined = false;
+                })
+
+                state.subtotal = state.subtotal + productsAcceptedSum;
+                state.total_cost = state.total_cost + productsAcceptedSum;
+                state.declined = false;
+            }
+           console.log('action', action)
+
         }
     },
     extraReducers: {
@@ -144,6 +173,6 @@ export const producersSlice = createSlice({
 });
 //redux saving methods in action object
 export const {setProducers, setCurrency, setSubtotal, setShippingCost, setStorageFee,
-    setTotalCost, addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, addCounter, setCounter} = producersSlice.actions
+    setTotalCost, addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, setProductChecked, setAcceptDeclineProducts} = producersSlice.actions
 
 export default producersSlice.reducer

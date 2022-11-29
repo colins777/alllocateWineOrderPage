@@ -1,5 +1,58 @@
 .App {
   //background-color: red;
+  background-color: #F9FAFB;
+  //padding: 0 25px;
+  .allocation-top-block {
+    display: flex;
+    justify-content: space-between;
+    .left {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      svg {
+        margin-right: 10px;
+        font-size: 20px;
+        color: #808080;
+        font-weight: normal;
+      }
+    }
+  }
+  .inaugural-block {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    h2 {
+      margin-top: 5px;
+      font-size: 32px;
+      color: #1A1A1A;
+    }
+    .offered {
+      padding: 5px;
+    }
+  }
+
+  .register-descision {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0px 0px 16px #80808033;
+    &__text {
+      h3 {
+        font-size: 16px;
+        color: #1A1A1A;
+      }
+
+    }
+  }
+
+  .allocation-number {
+    margin-bottom: 20px;
+    padding: 16px 25px;
+    background-color: #fff;
+  }
+
   .expert-advices {
     display: flex;
     align-items: center;
@@ -22,6 +75,45 @@
     &__mail {
       color: #B4936A;
       text-decoration: none;
+    }
+  }
+
+  .personal-allocation {
+    h3 {
+      padding: 25px;
+      margin: 0;
+      font-size: 24px;
+    }
+    &__text {
+      margin-bottom: 0;
+      padding: 25px;
+      border-top: 1px solid #E0E6EA;
+      border-bottom: 1px solid #E0E6EA;
+      color: #1A1A1A;
+    }
+  }
+}
+
+.checkbox-all-block {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 25px;
+  .right-side {
+    .allocation-btn {
+      padding: 10px 14px;
+      font-size: 14px;
+      text-decoration: none;
+      &:not(:first-child) {
+        margin-left: 15px;
+      }
+      &.grey {
+        color: #B3B3B3;
+        border: 1px solid #B3B3B3;
+      }
+      &.gold {
+        color: #B4936A;
+        border: 1px solid #B4936A;
+      }
     }
   }
 }
@@ -61,5 +153,11 @@
         }
       }
     }
+  }
+
+  .send-form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 }

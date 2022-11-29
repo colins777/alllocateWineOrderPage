@@ -1,8 +1,10 @@
 import React, {useCallback, useEffect} from "react";
 import './App.scss';
 import Producer from "./components/Producer/Producer";
-import {getProducers, setCurrency, setTotalCost, addCounter, setCounter} from "./redux/features/producers/producersSlice";
+import {getProducers, setCurrency, setTotalCost} from "./redux/features/producers/producersSlice";
 import {useSelector, useDispatch} from "react-redux";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 
 function App() {
     //dispatch for changing state of component
@@ -11,23 +13,16 @@ function App() {
 
     const producers = useSelector(state => state.producersData.producers);
     const currency = useSelector(state => state.producersData.currency);
+    const subtotal = useSelector(state => state.producersData.subtotal);
+    const shippingCost = useSelector(state => state.producersData.shipping_cost);
     const totalCost = useSelector(state => state.producersData.total_cost);
     const storageFee = useSelector(state => state.producersData.storage_fee);
     const isLoading = useSelector(state => state.producersData.loading);
-    const subtotal = useSelector(state =>
-        state.producersData.subtotal);
+
 
    // const {producers, currency, totalCost, isLoading, subtotal } = useSelector(state => state.producersData);
 
     console.log('state.producersData.producers', useSelector(state => state.producersData));
-    //test!!!!!!!!!!!!!!!!!
-    const counter = useSelector(state =>
-           state.producersData.counter
-    );
-
-    const plusCounter = () => {
-        console.log()
-    }
 
     useEffect(() => {
         dispatch(getProducers())
@@ -35,19 +30,23 @@ function App() {
 
   return (
     <div className="App">
-        <div className="counter">
+{/*        <div className="counter">
             <button onClick={() => plusCounter()}>Counter</button>
             <div>Counter: {counter}</div>
-        </div>
+        </div>*/}
 
         <div className="allocation-top-block">
-            <span>Allocations</span>
+            <div className="left">
+                <FontAwesomeIcon icon={faAngleLeft } />
+                <span>Allocations</span>
+            </div>
+           
             <a href='#'>View timeline</a>
         </div>
 
-        <div>
+        <div className="inaugural-block">
             <h2>INAUGURAL EVENT</h2>
-            <span>Offered</span>
+            <span className="offered">Offered</span>
         </div>
 
         <div className="register-descision">
@@ -113,9 +112,9 @@ function App() {
         <div className="checkbox-all-block">
             <input type="checkbox" className="form-control"/>
             <div className="right-side">
-                <a className="allocation-btn" href="">SHIP / STORE</a>
-                <a className="allocation-btn" href="">ACCEPT ALL PRODUCERS</a>
-                <a className="allocation-btn" href="">DECLINE ALL PRODUCERS</a>
+                <a className="allocation-btn grey">SHIP / STORE</a>
+                <a className="allocation-btn gold">ACCEPT ALL PRODUCERS</a>
+                <a className="allocation-btn gold">DECLINE ALL PRODUCERS</a>
             </div>
         </div>
 
@@ -182,7 +181,7 @@ function App() {
                             <p>Shipping rates shown are based on air freight and are subject to change given the ongoing volatility in global logistics. Option for sea freight may also be available.</p>
                             <a className="shipping-policy-link">View our shipping policy</a>
                         </div>
-                        <span className="subtotal-summ">{currency}401.60</span>
+                        <span className="subtotal-summ">{currency}{shippingCost}</span>
                     </div>
 
                     <div className="offer-summary__row">
@@ -194,6 +193,16 @@ function App() {
                         <span className="total-allocation__title">Total allocation offer</span>
                         <span className="total-allocation__summ">{currency}{totalCost}</span>
                         <input type="hidden" name="allocation_total_summ" value={totalCost}/>
+                    </div>
+
+                    <div className="agreement">
+                        <div className="title">
+                            Agreement
+                        </div>
+                    </div>
+
+                    <div className="send-form">
+                        <button className="save-btn">Save changes</button>
                     </div>
                 </div>
             </div>
