@@ -101,7 +101,7 @@ export const producersSlice = createSlice({
         setAcceptDeclineProducts: (state, action) => {
 
             //decline
-            let producerProdSumArr = [];
+/*            let producerProdSumArr = [];
             state.producers.map((producer) => {
                     producer.products.map((product, index) => {
                             console.log('product', product.price * product.offered)
@@ -112,7 +112,7 @@ export const producersSlice = createSlice({
                 return acc + current;
 
             });
-            console.log('totalCostAllProducts', totalCostAllProducts);
+            console.log('totalCostAllProducts', totalCostAllProducts);*/
 
 
            // if (state.producers[[action.payload.producerIndex]].declined !== null) {
@@ -146,7 +146,8 @@ export const producersSlice = createSlice({
 
                 } else {
                     //Accepted
-                    //@TODO not calculating correct total sum after switching from Decline, not added storage_fee, shipping
+                    //@TODO not calculating correct total sum after switching from Decline, not added storage_fee, shipping +
+                    //@TODO uncorrect calculating total sum if radio buttons not setted
                     let productsAcceptedSum = 0;
                     state.producers[action.payload.producerIndex].products.map((product, index) => {
                         const currentProduct = state.producers[action.payload.producerIndex].products[index];
@@ -163,13 +164,31 @@ export const producersSlice = createSlice({
                     state.producers[action.payload.producerIndex].declined = false;
                     state.subtotal = state.subtotal + productsAcceptedSum;
                     //state.total_cost = state.total_cost + state.shipping_cost + state.storage_fee;
-                    state.total_cost = state.total_cost + productsAcceptedSum;
+                    //state.total_cost = state.total_cost + productsAcceptedSum;
                     state.declined = false;
                 }
           //  state.total_cost = state.total_cost  + state.shipping_cost + state.storage_fee;
           //  }
 
+            let producerProdSumArr = [];
+            state.producers.map((producer) => {
+                producer.products.map((product) => {
+                    if (!product.declined) {
+                        //console.log('product', product.price * product.offered)
+                        producerProdSumArr.push(product.price * product.offered)
+                    }
+                })
+            });
 
+            if (producerProdSumArr.length) {
+                let totalCostAllProducts = producerProdSumArr.reduce((acc, current) => {
+                    return acc + current;
+                });
+                console.log('totalCostAllProducts', totalCostAllProducts);
+                state.total_cost = totalCostAllProducts + state.shipping_cost + state.storage_fee;
+            } else {
+                state.total_cost = 0;
+            }
         },
 
         setDeclineAllProducts:  (state, action) => {
