@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from "react";
 import './App.scss';
 import Producer from "./components/Producer/Producer";
-import {getProducers, setCurrency, setTotalCost} from "./redux/features/producers/producersSlice";
+import {getProducers, setCurrency, setTotalCost, setDeclineAllProducts} from "./redux/features/producers/producersSlice";
 import {useSelector, useDispatch} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
@@ -27,6 +27,15 @@ function App() {
     useEffect(() => {
         dispatch(getProducers())
     }, []);
+
+    const handleSubmit = (value) => {
+
+    }
+
+    const declineAllProductsHandler  = (value) => {
+        console.log('test')
+        dispatch(setDeclineAllProducts)
+    }
 
   return (
     <div className="App">
@@ -114,7 +123,11 @@ function App() {
             <div className="right-side">
                 <a className="allocation-btn grey">SHIP / STORE</a>
                 <a className="allocation-btn gold">ACCEPT ALL PRODUCERS</a>
-                <a className="allocation-btn gold">DECLINE ALL PRODUCERS</a>
+                <a className="allocation-btn gold"
+                    onClick={(e) => {e.preventDefault(); declineAllProductsHandler()}}
+                >
+                    DECLINE ALL PRODUCERS
+                </a>
             </div>
         </div>
 
@@ -202,7 +215,7 @@ function App() {
                     </div>
 
                     <div className="send-form">
-                        <button className="save-btn">Save changes</button>
+                        <button type="submit" className="save-btn">Save changes</button>
                     </div>
                 </div>
             </div>

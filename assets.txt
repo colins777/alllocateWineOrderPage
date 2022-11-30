@@ -12,3 +12,15 @@ npm run server
 
 Redux immutable practice
 https://blog.logrocket.com/redux-immutable-update-patterns/
+
+
+- Questions
+1. What does the Accept All producers btn ?
+2 What does the Ship/store btn ?
+
+
+declined 185890
+
+total 202613
+
+subtotal 16723

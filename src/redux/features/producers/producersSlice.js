@@ -9,7 +9,6 @@ const initialState = {
     storage_fee: 0,
     total_cost : 0,
     loading: true,
-    declined: false
 };
 
 export const getProducers = createAsyncThunk(
@@ -27,9 +26,7 @@ export const getProducers = createAsyncThunk(
             console.log('getProducers Error: ', e)
         }
     }
-)
-
-
+);
 
 export const producersSlice = createSlice({
     //slice name
@@ -102,42 +99,81 @@ export const producersSlice = createSlice({
 
         //Producer Accept/Decline
         setAcceptDeclineProducts: (state, action) => {
+
             //decline
-            if (action.payload.acceptDecline === 0) {
-                let productsDeclinedSum = 0;
-                state.producers[action.payload.producerIndex].products.map((product, index) => {
-                    console.log(product)
+            let producerProdSumArr = [];
+            state.producers.map((producer) => {
+                    producer.products.map((product, index) => {
+                            console.log('product', product.price * product.offered)
+                        producerProdSumArr.push(product.price * product.offered)
+                    })
+            });
+            let totalCostAllProducts = producerProdSumArr.reduce((acc, current) => {
+                return acc + current;
 
-                    productsDeclinedSum += state.producers[action.payload.producerIndex].products[index].total_sum;
-                    state.producers[action.payload.producerIndex].products[index].total_sum = 0;
+            });
+            console.log('totalCostAllProducts', totalCostAllProducts);
 
-                    state.producers[action.payload.producerIndex].products[index].declined = true;
-                })
 
-                state.subtotal = state.subtotal - productsDeclinedSum;
-                state.total_cost = state.total_cost - productsDeclinedSum;
+           // if (state.producers[[action.payload.producerIndex]].declined !== null) {
+                if (action.payload.acceptDecline === 0) {
+                    let productsDeclinedSum = 0;
+                    state.producers[action.payload.producerIndex].products.map((product, index) => {
 
-            } else {
-                let productsAcceptedSum = 0;
-                state.producers[action.payload.producerIndex].products.map((product, index) => {
-                    //productsAcceptedSum += state.producers[action.payload.producerIndex].products[index].total_sum;
+                        const currentProduct = state.producers[action.payload.producerIndex].products[index];
+                        productsDeclinedSum += currentProduct.total_sum;
+                        currentProduct.total_sum = 0;
+                        currentProduct.declined = true;
 
-                    productsAcceptedSum += state.producers[action.payload.producerIndex].products[index].price *
-                        state.producers[action.payload.producerIndex].products[index].offered;
+                    });
+                    state.producers[action.payload.producerIndex].declined = true;
+                    state.subtotal = state.subtotal - productsDeclinedSum;
 
-                    state.producers[action.payload.producerIndex].products[index].total_sum = state.producers[action.payload.producerIndex].products[index].price *
-                        state.producers[action.payload.producerIndex].products[index].offered;
-                    ;
+                    //check if all declined
+                    let producersQty = state.producers.length;
+                    let producersDeclined = [];
+                    state.producers.map((producer, index) => {
+                        if (producer.declined) {
+                            producersDeclined.push('declined')
+                        }
+                    })
 
-                    state.producers[action.payload.producerIndex].products[index].declined = false;
-                })
+                    if (producersQty === producersDeclined.length) {
+                        state.total_cost = 0;
+                    } else {
+                        state.total_cost = state.total_cost - productsDeclinedSum;
+                    }
 
-                state.subtotal = state.subtotal + productsAcceptedSum;
-                state.total_cost = state.total_cost + productsAcceptedSum;
-                state.declined = false;
-            }
-           console.log('action', action)
+                } else {
+                    //Accepted
+                    //@TODO not calculating correct total sum after switching from Decline, not added storage_fee, shipping
+                    let productsAcceptedSum = 0;
+                    state.producers[action.payload.producerIndex].products.map((product, index) => {
+                        const currentProduct = state.producers[action.payload.producerIndex].products[index];
 
+                        productsAcceptedSum += currentProduct.price *
+                            currentProduct.offered;
+
+                        currentProduct.total_sum =
+                            currentProduct.price *
+                            currentProduct.offered;
+                        currentProduct.declined = false;
+                    });
+
+                    state.producers[action.payload.producerIndex].declined = false;
+                    state.subtotal = state.subtotal + productsAcceptedSum;
+                    //state.total_cost = state.total_cost + state.shipping_cost + state.storage_fee;
+                    state.total_cost = state.total_cost + productsAcceptedSum;
+                    state.declined = false;
+                }
+          //  state.total_cost = state.total_cost  + state.shipping_cost + state.storage_fee;
+          //  }
+
+
+        },
+
+        setDeclineAllProducts:  (state, action) => {
+            console.log('setDeclineAllProducts', action)
         }
     },
     extraReducers: {
@@ -172,7 +208,8 @@ export const producersSlice = createSlice({
     // }
 });
 //redux saving methods in action object
-export const {setProducers, setCurrency, setSubtotal, setShippingCost, setStorageFee,
-    setTotalCost, addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, setProductChecked, setAcceptDeclineProducts} = producersSlice.actions
+export const {setCurrency, setTotalCost, addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, setProductChecked, setAcceptDeclineProducts,
+    setDeclineAllProducts
+} = producersSlice.actions
 
 export default producersSlice.reducer

@@ -7,9 +7,6 @@ import {useSelector, useDispatch} from "react-redux";
 const Producer = function ({producerData, producerId, currency}) {
 
     const dispatch = useDispatch();
-    const productsDeclined = useSelector((state) => {
-        return state.producersData.declined;
-    });
 
     const producersList = useSelector((state) => {
         return state.producersData.producers
@@ -36,7 +33,17 @@ const Producer = function ({producerData, producerId, currency}) {
     const acceptDeclineHandler = (value) => {
         const dataAcceptDecline = {...productDataAction, 'acceptDecline' : +value}
         dispatch(setAcceptDeclineProducts(dataAcceptDecline))
+    };
+
+    const productsDeclined = useSelector((state) => {
+        return state.producersData.producers[getProducerIndex()].declined;
+    });
+
+    const checkAllProducersProductsHandler  = (value) => {
+        console.log('checkAllProducersProductsHandler:', value)
     }
+
+   console.log('productsDeclined', productsDeclined)
 
     return (
         <div>
@@ -46,7 +53,11 @@ const Producer = function ({producerData, producerId, currency}) {
                     <label htmlFor="" className="producer-all-check">
                         <input type="checkbox"
                                className="form-control"
-                               name={'producer_id[' + producerData.id +'][check_all_producer_products]'}
+                               name={'[producer_id][' + producerData.id +'][check_all_producer_products]'}
+                               //checked={!productsDeclined ? '' : 'checked'}
+                                value={productsDeclined}
+                               disabled={productsDeclined ? 'disabled' : ''}
+                               onChange={(e) => checkAllProducersProductsHandler(e.target.value)}
                         />
                     </label>
 
@@ -58,9 +69,7 @@ const Producer = function ({producerData, producerId, currency}) {
 
                 <div className="right-side">
                         <span className="decision">Your decision</span>
-                        <div className="radio-buttons"
-                             onChange={ (e) => acceptDeclineHandler(e.target.value)}
-                        >
+                        <div className="radio-buttons">
                             <div className="label-wrap">
                                 <label htmlFor="accept">
                                     <span className="title">Accept</span>
@@ -68,6 +77,8 @@ const Producer = function ({producerData, producerId, currency}) {
                                            id="accept"
                                            name={'producer_id[' + producerData.id +'][accept_decline]'}
                                            value="1"
+                                          checked={!productsDeclined ? 'checked' : ''}
+                                           onChange={ (e) => acceptDeclineHandler(e.target.value)}
                                     />
                                 </label>
                             </div>
@@ -79,6 +90,8 @@ const Producer = function ({producerData, producerId, currency}) {
                                            id="decline"
                                            name={'producer_id[' + producerData.id +'][accept_decline]'}
                                            value="0"
+                                           checked={productsDeclined ? 'checked' : ''}
+                                           onChange={ (e) => acceptDeclineHandler(e.target.value)}
                                     />
                                 </label>
                             </div>

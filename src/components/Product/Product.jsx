@@ -14,7 +14,6 @@ const Product = function ({productData, producerId, currency}) {
 
     const productChecked = productData.checked;
 
-
     //save producer index for send to action object for change state
     //state.producers[producerIndex].products[0].total_sum = 1
     const getProducerIndex = function () {
@@ -54,21 +53,13 @@ const Product = function ({productData, producerId, currency}) {
         return state.producersData.producers[productDataAction.producerIndex].products[productDataAction.productIndex].declined;
     });
 
-    console.log('productDeclined', productDeclined)
-
-   // const offeredProductInput = useRef(null);
     const addProductClickHandler = (inputValue) => {
-
-       // offeredProductInput.value = +offeredProductInput.value++;
-       // console.log('offeredProductInput.current.value', offeredProductInput)
-
         dispatch(addProdPriceInTotalCost(productDataAction))
-           // console.log(productObject)
+
     };
 
     const minusProductClickHandler = () => {
         dispatch(minusProdPriceInTotalCost(productDataAction))
-        // console.log(productObject)
     };
 
     const setOfferedQtyHandler = (qty) => {
@@ -94,11 +85,11 @@ const Product = function ({productData, producerId, currency}) {
                 <label htmlFor=""  className="checkbox" >
                     <input type="checkbox"
                            className="form-control"
-                           name={'[producer_id]['+producerId + '][product_id][' +productData.id + '][product_checked]'}
+                           name={'[producer_id][' + producerId + '][product_id][' + productData.id + '][product_checked]'}
                            value={productChecked}
-                            checked={productChecked ? 'checked' : ''}
+                           checked={productChecked ? true : false}
                            onChange={(e) => setCheckedProductHandler(e.target.value)}
-                            disabled={productDeclined ? 'disabled' : ''}
+                           disabled={productDeclined ? 'disabled' : ''}
                     />
                 </label>
             </div>
@@ -110,7 +101,7 @@ const Product = function ({productData, producerId, currency}) {
             
             <div className="descr table-cell">
                 <h4 className="name">{productData.name}</h4>
-                <span className="pack">{productData.price} {productData.price_per_pack}</span>
+                <span className="pack">{currency}{productData.price} / {productData.price_per_pack}</span>
                 <span className="option-title">Delivery option:</span>
 
                 <div className="delivery-option-block">
