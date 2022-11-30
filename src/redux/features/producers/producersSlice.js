@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
+import {countTotalProductsSumm} from "../../../helpers/countTotalProductsSumm";
 
 const initialState = {
     producers: [],
@@ -99,23 +100,7 @@ export const producersSlice = createSlice({
 
         //Producer Accept/Decline
         setAcceptDeclineProducts: (state, action) => {
-
             //decline
-/*            let producerProdSumArr = [];
-            state.producers.map((producer) => {
-                    producer.products.map((product, index) => {
-                            console.log('product', product.price * product.offered)
-                        producerProdSumArr.push(product.price * product.offered)
-                    })
-            });
-            let totalCostAllProducts = producerProdSumArr.reduce((acc, current) => {
-                return acc + current;
-
-            });
-            console.log('totalCostAllProducts', totalCostAllProducts);*/
-
-
-           // if (state.producers[[action.payload.producerIndex]].declined !== null) {
                 if (action.payload.acceptDecline === 0) {
                     let productsDeclinedSum = 0;
                     state.producers[action.payload.producerIndex].products.map((product, index) => {
@@ -167,14 +152,11 @@ export const producersSlice = createSlice({
                     //state.total_cost = state.total_cost + productsAcceptedSum;
                     state.declined = false;
                 }
-          //  state.total_cost = state.total_cost  + state.shipping_cost + state.storage_fee;
-          //  }
 
             let producerProdSumArr = [];
             state.producers.map((producer) => {
                 producer.products.map((product) => {
                     if (!product.declined) {
-                        //console.log('product', product.price * product.offered)
                         producerProdSumArr.push(product.price * product.offered)
                     }
                 })
@@ -192,8 +174,35 @@ export const producersSlice = createSlice({
         },
 
         setDeclineAllProducts:  (state, action) => {
-            console.log('setDeclineAllProducts', action)
+            state.producers.map((producer, index) => {
+                state.producers[index].declined = true;
+                producer.products.map((product, productIndex) => {
+                    state.producers[index].products[productIndex].declined = true;
+                    //set total product sum to 0
+                    state.producers[index].products[productIndex].total_sum = 0;
+                })
+            })
+
+            state.subtotal = 0;
+            state.total_cost = 0;
+        },
+
+        setAcceptAllProducts:  (state, action) => {
+            state.producers.map((producer, index) => {
+                state.producers[index].declined = false;
+                producer.products.map((product, productIndex) => {
+                    const currentProduct = state.producers[index].products[productIndex];
+                    currentProduct.declined = false;
+                    currentProduct.total_sum = currentProduct.price * currentProduct.offered;
+                })
+            });
+            let totalProductsSum = countTotalProductsSumm(state.producers);
+            state.subtotal = totalProductsSum;
+            state.total_cost = totalProductsSum + state.shipping_cost + state.storage_fee;
+
+           // console.log('totalTest', totalTest)
         }
+
     },
     extraReducers: {
         [getProducers.pending]: (state) => {
@@ -228,7 +237,7 @@ export const producersSlice = createSlice({
 });
 //redux saving methods in action object
 export const {setCurrency, setTotalCost, addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, setProductChecked, setAcceptDeclineProducts,
-    setDeclineAllProducts
+    setDeclineAllProducts, setAcceptAllProducts
 } = producersSlice.actions
 
 export default producersSlice.reducer

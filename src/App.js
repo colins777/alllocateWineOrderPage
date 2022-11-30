@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from "react";
 import './App.scss';
 import Producer from "./components/Producer/Producer";
-import {getProducers, setCurrency, setTotalCost, setDeclineAllProducts} from "./redux/features/producers/producersSlice";
+import {getProducers, setDeclineAllProducts, setAcceptAllProducts} from "./redux/features/producers/producersSlice";
 import {useSelector, useDispatch} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
@@ -33,9 +33,12 @@ function App() {
     }
 
     const declineAllProductsHandler  = (value) => {
-        console.log('test')
-        dispatch(setDeclineAllProducts)
-    }
+        dispatch(setDeclineAllProducts(value))
+    };
+
+    const acceptAllProductsHandler  = (value) => {
+        dispatch(setAcceptAllProducts(value))
+    };
 
   return (
     <div className="App">
@@ -122,7 +125,11 @@ function App() {
             <input type="checkbox" className="form-control"/>
             <div className="right-side">
                 <a className="allocation-btn grey">SHIP / STORE</a>
-                <a className="allocation-btn gold">ACCEPT ALL PRODUCERS</a>
+                <a className="allocation-btn gold"
+                   onClick={(e) => {e.preventDefault(); acceptAllProductsHandler()}}
+                >
+                    ACCEPT ALL PRODUCERS
+                </a>
                 <a className="allocation-btn gold"
                     onClick={(e) => {e.preventDefault(); declineAllProductsHandler()}}
                 >
