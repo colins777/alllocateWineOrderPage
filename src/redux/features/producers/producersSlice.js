@@ -9,6 +9,9 @@ const initialState = {
     shipping_cost: 0,
     storage_fee: 0,
     total_cost : 0,
+    allocation_number: 0,
+    confirmation_deadline: null,
+    order_status: null,
     loading: true,
 };
 
@@ -217,6 +220,9 @@ export const producersSlice = createSlice({
                     state.shipping_cost = action.payload.offer_summary.shipping_cost;
                     state.storage_fee = action.payload.offer_summary.storage_fee;
 
+                    state.allocation_number = action.payload.offer_summary.allocation_number;
+                    state.confirmation_deadline = action.payload.offer_summary.confirmation_deadline;
+                    state.order_status = action.payload.offer_summary.order_status;
                     //console.log('action.payload data', action.payload);
                     state.loading = false
 

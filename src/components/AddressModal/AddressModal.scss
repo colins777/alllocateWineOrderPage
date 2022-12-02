@@ -1,0 +1,96 @@
+.r-address-modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,.3);
+  z-index: 9999999;
+  .active {
+    display: block;
+    transition: all .3s ease;
+    visibility: visible;
+    opacity: 1;
+  }
+  &.hide {
+    visibility: hidden;
+    opacity: 0;
+  }
+  &__content {
+    padding: 15px;
+    transform: translate(-50%, -50%);
+    position: relative;
+    top: 50%;
+    left: 50%;
+    max-width: 834px;
+    width: 100%;
+    background-color: #F9FAFB;
+    .inner {
+      overflow-y: auto;
+      max-height: 100vh;
+      .modal-title {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #1A1A1A;
+      }
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      .chose-shipping {
+        display: flex;
+        justify-content: space-between;
+        .left {
+          font-size: 16px;
+        }
+      }
+      .destination {
+        display: flex;
+        flex-direction: column;
+        .title {
+          display: block;
+        }
+
+        .address-fields {
+          margin-top: 14px;
+          .field {
+            display: block;
+            font-size: 16px;
+            //line-height: 24px;
+            color: #1A1A1A;
+          }
+        }
+      }
+    }
+
+    .buttons {
+      display: flex !important;
+      justify-content: flex-end;
+    .modal-btn{
+      padding: 14px 24px;
+      border: none;
+      outline: none;
+      text-transform: uppercase;
+      font-size: 16px;
+      text-decoration: none;
+      transition: all .3s ease;
+      &.cancel {
+        margin-right: 25px;
+        background-color: transparent;
+        color: #808080;
+      }
+      &.save {
+        background-color: #B4936A;
+        color: #fff;
+        &:hover {
+          background-color: #C3A988;
+          border-color: #C3A988;
+        }
+      }
+    }
+
+
+    }
+  }
+
+}

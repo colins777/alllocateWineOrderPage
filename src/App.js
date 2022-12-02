@@ -5,6 +5,7 @@ import {getProducers, setDeclineAllProducts, setAcceptAllProducts} from "./redux
 import {useSelector, useDispatch} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import AddressModal from "./components/AddressModal/AddressModal";
 
 function App() {
     //dispatch for changing state of component
@@ -18,6 +19,9 @@ function App() {
     const totalCost = useSelector(state => state.producersData.total_cost);
     const storageFee = useSelector(state => state.producersData.storage_fee);
     const isLoading = useSelector(state => state.producersData.loading);
+    const allocationNumber = useSelector(state => state.producersData.allocation_number);
+    const confirmationDeadline = useSelector(state => state.producersData.confirmation_deadline);
+    const order_status = useSelector(state => state.producersData.order_status);
 
 
    // const {producers, currency, totalCost, isLoading, subtotal } = useSelector(state => state.producersData);
@@ -42,11 +46,6 @@ function App() {
 
   return (
     <div className="App">
-{/*        <div className="counter">
-            <button onClick={() => plusCounter()}>Counter</button>
-            <div>Counter: {counter}</div>
-        </div>*/}
-
         <div className="allocation-top-block">
             <div className="left">
                 <FontAwesomeIcon icon={faAngleLeft } />
@@ -58,7 +57,7 @@ function App() {
 
         <div className="inaugural-block">
             <h2>INAUGURAL EVENT</h2>
-            <span className="offered">Offered</span>
+            <span className="offered">{order_status}</span>
         </div>
 
         <div className="register-descision">
@@ -73,8 +72,8 @@ function App() {
 
         <div className="allocation-number">
             <h3 className="allocation-code">
-                <span>ALLOCATION NUMBER:</span>
-                <span>A009202100002</span>
+                <span className="title">ALLOCATION NUMBER: </span>
+                <span className="number">{allocationNumber}</span>
             </h3>
             <div className="allocation-content">
                 <div className="allocation-column">
@@ -92,7 +91,7 @@ function App() {
                             Status
                         </span>
                         <span className="event">
-                            Offered
+                            {order_status}
                         </span>
                     </div>
                 </div>
@@ -106,7 +105,7 @@ function App() {
                             </div>
                         </span>
                         <span className="event">
-                            08 Oct 2021, 23:59 (GMT+8)
+                            {confirmationDeadline}
                         </span>
                     </div>
                 </div>
@@ -189,23 +188,23 @@ function App() {
                     ALLOCATION OFFER SUMMARY
                 </div>
                 <div className="offer-summary__content">
-                    <div className="offer-summary__row">
+                    <div className="offer-summary__row subtotal">
                         <span className="subtotal-title">Subtotal</span>
                         <span className="subtotal-summ">{currency}{subtotal}</span>
                     </div>
 
                     <div className="offer-summary__row shipping-block">
                         <div className="shipping-rows">
-                            <span>Indicative shipping cost (More details)</span>
-                            <span>Indicative shipping cost ( (inclusive of insurance, duties, and taxes when applicable)</span>
-                            <p>Shipping rates shown are based on air freight and are subject to change given the ongoing volatility in global logistics. Option for sea freight may also be available.</p>
+                            <span>Indicative shipping cost (<a className="gold-text">More details</a>)</span>
+                            <span className="inclusive-text">(inclusive of insurance, duties, and taxes when applicable)</span>
+                            <p className="shipping-rates">Shipping rates shown are based on air freight and are subject to change given the ongoing volatility in global logistics. Option for sea freight may also be available.</p>
                             <a className="shipping-policy-link">View our shipping policy</a>
                         </div>
                         <span className="subtotal-summ">{currency}{shippingCost}</span>
                     </div>
 
-                    <div className="offer-summary__row">
-                        <span className="subtotal-title">Storage fee (<span className="more-details">More details</span>)</span>
+                    <div className="offer-summary__row fee">
+                        <span className="subtotal-title">Storage fee</span>
                         <span className="subtotal-summ">{currency}{storageFee}</span>
                     </div>
 
@@ -215,16 +214,37 @@ function App() {
                         <input type="hidden" name="allocation_total_summ" value={totalCost}/>
                     </div>
 
-                    <div className="agreement">
-                        <div className="title">
-                            Agreement
-                        </div>
+                    <div className="note-final-amount">Final amount will be calculated after your allocation confirmation.</div>
+
+                </div> {/*offer-summary__content*/}
+
+                <div className="agreement">
+                    <div className="agreement-title">
+                        Agreement
                     </div>
 
-                    <div className="send-form">
-                        <button type="submit" className="save-btn">Save changes</button>
+                    <div className="checkbox-wrapper">
+                        <label htmlFor="" className="filter checkbox-container">
+                            <input type="checkbox"
+                                   className="form-control"
+                                   name="agreetment"
+                            />
+                            <span className="checkmark"></span>
+                        </label>
+                        <span className="note-text">I have read and agreed to Allocate.Wine’s <a className="link">Terms & Conditions</a></span>
+
                     </div>
+
+
+
                 </div>
+
+                <AddressModal/>
+
+                <div className="send-form">
+                    <button type="submit" className="save-btn brown-btn">Save changes</button>
+                </div>
+
             </div>
         </form>
 
