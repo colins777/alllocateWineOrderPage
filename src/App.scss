@@ -257,7 +257,8 @@
 
     .send-form {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-end;
       justify-content: flex-end;
     }
   }
@@ -322,8 +323,25 @@
       background-color: #C3A988;
       border-color: #C3A988;
     }
+    &.disabled {
+      pointer-events: none;
+      cursor: not-allowed;
+      background-color: #C3A988;
+      border-color: #C3A988;
+    }
   }
 
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none!important;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield!important;
+    //pointer-events: none;
+  }
 
 }
+
 

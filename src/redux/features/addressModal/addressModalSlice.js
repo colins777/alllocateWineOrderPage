@@ -1,7 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    modalShow: false
+    modalShow: false,
+    checked_products: []
+    //addresses: state.
 };
 
 export const addressModalSlice = createSlice({
@@ -11,8 +13,7 @@ export const addressModalSlice = createSlice({
         setShowHideAddressModal: (state, action) => {
             console.log('showHideAddressModal action', action)
             state.modalShow = action.payload
-
-
+            //state.addresses = 'test'
         }
     }
 });

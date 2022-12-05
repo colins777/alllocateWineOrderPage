@@ -13,6 +13,9 @@ const initialState = {
     confirmation_deadline: null,
     order_status: null,
     loading: true,
+    saveBtnDisabled: false,
+    error: false,
+    addresses: []
 };
 
 export const getProducers = createAsyncThunk(
@@ -20,14 +23,27 @@ export const getProducers = createAsyncThunk(
     async (_, {rejectWithValue, dispatch} ) => {
         try {
             const {data} = await axios.get('http://localhost:3004/allocateData')
-
             console.log('producers slice', data)
-            //return data.producers;
             return data;
-
-
         } catch (e) {
-            console.log('getProducers Error: ', e)
+            //console.log('getProducers Error: ', e)
+            console.log('Error', e)
+            return e;
+        }
+    }
+);
+
+export const saveAllData = createAsyncThunk(
+    'producers/saveAllData',
+    async (data, {rejectWithValue}) => {
+        try {
+           await axios.post('http://localhost:3004/allocateAllData',
+                data
+            );
+            return data;
+        } catch (e) {
+            console.log('Saving error: ', e.message)
+            return rejectWithValue(e.message)
         }
     }
 );
@@ -204,8 +220,7 @@ export const producersSlice = createSlice({
             state.total_cost = totalProductsSum + state.shipping_cost + state.storage_fee;
 
            // console.log('totalTest', totalTest)
-        }
-
+        },
     },
     extraReducers: {
         [getProducers.pending]: (state) => {
@@ -224,13 +239,30 @@ export const producersSlice = createSlice({
                     state.confirmation_deadline = action.payload.offer_summary.confirmation_deadline;
                     state.order_status = action.payload.offer_summary.order_status;
                     //console.log('action.payload data', action.payload);
-                    state.loading = false
+                    state.loading = false;
+
+                    state.addresses = action.payload.addresses;
 
             console.log('payload Back', action.payload)
         },
         [getProducers.rejected]: (state) => {
             state.loading = false
-        }
+        },
+        //Save all data
+        [saveAllData.pending]: (state) => {
+            state.saveBtnDisabled = true;
+            state.error = false;
+
+            console.log('saveBtnDisabled befor', state.saveBtnDisabled )
+        },
+        [saveAllData.fulfilled]: (state) => {
+            state.saveBtnDisabled = false;
+            console.log('saveBtnDisabled success', state.saveBtnDisabled )
+        },
+        [saveAllData.rejected]: (state) => {
+            state.saveBtnDisabled = false;
+            state.error = 'Something went wrong...';
+        },
     },
     // extraReducers: (builder) => {
     //     builder.addCase(getProducers.fulfilled,  (state, action) => {
@@ -242,8 +274,8 @@ export const producersSlice = createSlice({
     // }
 });
 //redux saving methods in action object
-export const {setCurrency, setTotalCost, addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, setProductChecked, setAcceptDeclineProducts,
-    setDeclineAllProducts, setAcceptAllProducts
-} = producersSlice.actions
+export const {addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, setProductChecked, setAcceptDeclineProducts,
+    setDeclineAllProducts, setAcceptAllProducts, setSaveData
+} = producersSlice.actions;
 
 export default producersSlice.reducer

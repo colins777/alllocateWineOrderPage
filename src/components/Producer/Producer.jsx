@@ -40,10 +40,10 @@ const Producer = function ({producerData, producerId, currency}) {
     });
 
     const checkAllProducersProductsHandler  = (value) => {
-        console.log('checkAllProducersProductsHandler:', value)
+      console.log('checkAllProducersProductsHandler:', value)
     }
 
-   console.log('productsDeclined', productsDeclined)
+  // console.log('productsDeclined', productsDeclined)
 
     return (
         <div>

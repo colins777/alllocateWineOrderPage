@@ -1,0 +1,278 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "allocateData": {
+    "producers": [
+      {
+        "id": 1,
+        "name": "Bass Philip",
+        "recommended_producer": true,
+        "checked": false,
+        "declined": false,
+        "products": [
+          {
+            "id": 101,
+            "img": "https://allocate-wine.gabsoft.net/image/cache/catalog/import/bass-phillip-premium-pinot-noir-2018-910x1155.png",
+            "name": "Bass Phillip Premium Pinot Noir 2018",
+            "price": 1200,
+            "price_per_pack": "12 bottles Carton (75cl)",
+            "delivery_option": "Ship to home - 1 qty",
+            "requested": 1,
+            "offered": 21,
+            "offered_allow_edit": true,
+            "total_sum": 25200,
+            "same_producer": true,
+            "checked": true,
+            "declined": false
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Petro test",
+        "recommended_producer": false,
+        "checked": false,
+        "declined": false,
+        "products": [
+          {
+            "id": 102,
+            "img": "https://allocate-wine.gabsoft.net/image/cache/catalog/import/bass-phillip-premium-pinot-noir-2018-910x1155.png",
+            "name": "Domaine Fourrier Gevrey-Chambertin Premier Cru Clos Saint-Jacques 2018",
+            "price": 400,
+            "price_per_pack": "12 bottles Carton (75cl)",
+            "delivery_option": "Ship to Home - 1 qty",
+            "requested": 1,
+            "offered": 55,
+            "offered_allow_edit": true,
+            "total_sum": 22000,
+            "same_producer": true,
+            "checked": false,
+            "declined": false
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "SCREAMING EAGLE",
+        "recommended_producer": true,
+        "checked": false,
+        "declined": false,
+        "products": [
+          {
+            "id": 103,
+            "img": "https://allocate-wine.gabsoft.net/image/cache/catalog/import/bass-phillip-premium-pinot-noir-2018-910x1155.png",
+            "name": "Screaming Eagle Cabernet Sauvignon 2018",
+            "price": 123,
+            "price_per_pack": "6 bottles Carton (75cl)",
+            "delivery_option": "Ship to home - 1 qty",
+            "requested": 1,
+            "offered": 2,
+            "offered_allow_edit": false,
+            "total_sum": 246,
+            "same_producer": true,
+            "checked": true,
+            "declined": false
+          },
+          {
+            "id": 104,
+            "img": "https://allocate-wine.gabsoft.net/image/cache/catalog/import/ausone-chapelle-d-ausone-saint-emilion-grand-cru-2011-910x1155.png",
+            "name": "Screaming Eagle Sauvignon Blanc 2018",
+            "price": 1400,
+            "price_per_pack": "8 bottles OWC (75cl)",
+            "delivery_option": "Delivery option: Not selected",
+            "requested": 1,
+            "offered": 2,
+            "offered_allow_edit": false,
+            "total_sum": 2800,
+            "same_producer": false,
+            "checked": true,
+            "declined": false
+          }
+        ]
+      }
+    ],
+    "offer_summary": {
+      "subtotal": 50246,
+      "shipping_cost": 200,
+      "storage_fee": 300,
+      "total_cost": 50746,
+      "allocation_number": "A009202100002",
+      "confirmation_deadline": "08 Oct 2021, 23:59 (GMT+8)",
+      "order_status": "Offered"
+    },
+    "currency": {
+      "title": "€"
+    },
+    "addresses": [
+      {
+        "id": 1,
+        "default_address": false,
+        "product_id": [
+          101,
+          102
+        ],
+        "producer_id": [
+          1,
+          2
+        ],
+        "email": "testasdasd@gmail.com",
+        "phone": "050 37 33 123",
+        "address_name": "My home Petr test",
+        "first_name": "Petr",
+        "last_name": "Testov",
+        "street_address": "Chehova 8",
+        "street_address_2": "-",
+        "city": "Chernivtsy",
+        "state": "Chernivetska oblast",
+        "country": "Ukraine"
+      },
+      {
+        "id": 2,
+        "default_address": false,
+        "product_id": [
+          103,
+          104
+        ],
+        "producer_id": [
+          3
+        ],
+        "email": "rumyga@gmail.com",
+        "phone": "099 00 33 123",
+        "address_name": "My home Petr test",
+        "first_name": "Yulya",
+        "last_name": "Igorivna",
+        "street_address": "Golovna 105",
+        "street_address_2": "Korduby 12",
+        "city": "Kyiv",
+        "state": "Chernivetska oblast",
+        "country": "Ukraine"
+      },
+      {
+        "id": 3,
+        "default_address": true,
+        "product_id": [],
+        "producer_id": [],
+        "email": "testasdasd@gmail.com",
+        "phone": "050 37 33 123",
+        "address_name": "My home Petr test",
+        "first_name": "Petr",
+        "last_name": "Testov",
+        "street_address": "Chehova 12",
+        "street_address_2": "-",
+        "city": "Sumy",
+        "state": "Sumska oblast",
+        "country": "Ukraine"
+      }
+    ]
+  },
+  "allocateAllData": {
+    "producers": [
+      {
+        "id": 1,
+        "name": "Bass Philip",
+        "recommended_producer": true,
+        "checked": false,
+        "declined": false,
+        "products": [
+          {
+            "id": 101,
+            "img": "https://allocate-wine.gabsoft.net/image/cache/catalog/import/bass-phillip-premium-pinot-noir-2018-910x1155.png",
+            "name": "Bass Phillip Premium Pinot Noir 2018",
+            "price": 1200,
+            "price_per_pack": "12 bottles Carton (75cl)",
+            "delivery_option": "Ship to home - 1 qty",
+            "requested": 1,
+            "offered": 21,
+            "offered_allow_edit": true,
+            "total_sum": 25200,
+            "same_producer": true,
+            "checked": true,
+            "declined": false
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Petro test",
+        "recommended_producer": false,
+        "checked": false,
+        "declined": false,
+        "products": [
+          {
+            "id": 102,
+            "img": "https://allocate-wine.gabsoft.net/image/cache/catalog/import/bass-phillip-premium-pinot-noir-2018-910x1155.png",
+            "name": "Domaine Fourrier Gevrey-Chambertin Premier Cru Clos Saint-Jacques 2018",
+            "price": 400,
+            "price_per_pack": "12 bottles Carton (75cl)",
+            "delivery_option": "Ship to Home - 1 qty",
+            "requested": 1,
+            "offered": 55,
+            "offered_allow_edit": true,
+            "total_sum": 22000,
+            "same_producer": true,
+            "checked": false,
+            "declined": false
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "SCREAMING EAGLE",
+        "recommended_producer": true,
+        "checked": false,
+        "declined": false,
+        "products": [
+          {
+            "id": 103,
+            "img": "https://allocate-wine.gabsoft.net/image/cache/catalog/import/bass-phillip-premium-pinot-noir-2018-910x1155.png",
+            "name": "Screaming Eagle Cabernet Sauvignon 2018",
+            "price": 123,
+            "price_per_pack": "6 bottles Carton (75cl)",
+            "delivery_option": "Ship to home - 1 qty",
+            "requested": 1,
+            "offered": 2,
+            "offered_allow_edit": false,
+            "total_sum": 246,
+            "same_producer": true,
+            "checked": true,
+            "declined": false
+          },
+          {
+            "id": 104,
+            "img": "https://allocate-wine.gabsoft.net/image/cache/catalog/import/ausone-chapelle-d-ausone-saint-emilion-grand-cru-2011-910x1155.png",
+            "name": "Screaming Eagle Sauvignon Blanc 2018",
+            "price": 1400,
+            "price_per_pack": "8 bottles OWC (75cl)",
+            "delivery_option": "Delivery option: Not selected",
+            "requested": 1,
+            "offered": 2,
+            "offered_allow_edit": false,
+            "total_sum": 2800,
+            "same_producer": false,
+            "checked": true,
+            "declined": false
+          }
+        ]
+      }
+    ],
+    "subtotal": 50246,
+    "shippingCost": 200,
+    "storageFee": 300,
+    "totalCost": 50746
+  }
+}

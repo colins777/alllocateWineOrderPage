@@ -1,7 +1,7 @@
-import React, {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import './App.scss';
 import Producer from "./components/Producer/Producer";
-import {getProducers, setDeclineAllProducts, setAcceptAllProducts} from "./redux/features/producers/producersSlice";
+import {getProducers, setDeclineAllProducts, setAcceptAllProducts, saveAllData} from "./redux/features/producers/producersSlice";
 import {useSelector, useDispatch} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
@@ -22,19 +22,12 @@ function App() {
     const allocationNumber = useSelector(state => state.producersData.allocation_number);
     const confirmationDeadline = useSelector(state => state.producersData.confirmation_deadline);
     const order_status = useSelector(state => state.producersData.order_status);
-
-
-   // const {producers, currency, totalCost, isLoading, subtotal } = useSelector(state => state.producersData);
-
-    console.log('state.producersData.producers', useSelector(state => state.producersData));
+    const {saveBtnDisabled} = useSelector(state => state.producersData);
+    const {error} = useSelector(state => state.producersData);
 
     useEffect(() => {
         dispatch(getProducers())
     }, []);
-
-    const handleSubmit = (value) => {
-
-    }
 
     const declineAllProductsHandler  = (value) => {
         dispatch(setDeclineAllProducts(value))
@@ -43,6 +36,21 @@ function App() {
     const acceptAllProductsHandler  = (value) => {
         dispatch(setAcceptAllProducts(value))
     };
+
+    //send data to backend
+    let stateDataForBackend = {
+        producers,
+        subtotal,
+        shippingCost,
+        storageFee,
+        totalCost
+    };
+
+    const saveDataHandler = () => {
+        dispatch(saveAllData(stateDataForBackend))
+    };
+
+    //saveAllData
 
   return (
     <div className="App">
@@ -242,7 +250,12 @@ function App() {
                 <AddressModal/>
 
                 <div className="send-form">
-                    <button type="submit" className="save-btn brown-btn">Save changes</button>
+                    <button type="submit" className={saveBtnDisabled ? 'save-btn brown-btn disabled' : 'save-btn brown-btn'}
+                        onClick={(e) => {e.preventDefault(); saveDataHandler(); }}
+                    >
+                        {saveBtnDisabled ? "Saving..." : 'Save changes'}
+                    </button>
+                    {error ? error : ''}
                 </div>
 
             </div>
