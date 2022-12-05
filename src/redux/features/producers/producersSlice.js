@@ -12,17 +12,20 @@ const initialState = {
     allocation_number: 0,
     confirmation_deadline: null,
     order_status: null,
+    addresses: [],
+
+    //not using on backend
     loading: true,
-    saveBtnDisabled: false,
-    error: false,
-    addresses: []
+    saveBtnDisabled: true,
+    agreement: false,
+    error: false
 };
 
 export const getProducers = createAsyncThunk(
     'producers/getProducers',
     async (_, {rejectWithValue, dispatch} ) => {
         try {
-            const {data} = await axios.get('http://localhost:3004/allocateData')
+            const {data} = await axios.get('http://localhost:3004/allocateData');
             console.log('producers slice', data)
             return data;
         } catch (e) {
@@ -221,6 +224,16 @@ export const producersSlice = createSlice({
 
            // console.log('totalTest', totalTest)
         },
+
+        setAgreementCheckbox: (state, action) => {
+            console.log('setAgreementCheckbox', action)
+            state.agreement =  action.payload;
+            if (action.payload) {
+                state.saveBtnDisabled = false;
+            } else {
+                state.saveBtnDisabled = true;
+            }
+        }
     },
     extraReducers: {
         [getProducers.pending]: (state) => {
@@ -252,15 +265,15 @@ export const producersSlice = createSlice({
         [saveAllData.pending]: (state) => {
             state.saveBtnDisabled = true;
             state.error = false;
-
-            console.log('saveBtnDisabled befor', state.saveBtnDisabled )
+            state.loading = true;
         },
         [saveAllData.fulfilled]: (state) => {
             state.saveBtnDisabled = false;
-            console.log('saveBtnDisabled success', state.saveBtnDisabled )
+            state.loading = false;
         },
         [saveAllData.rejected]: (state) => {
             state.saveBtnDisabled = false;
+            state.loading = false;
             state.error = 'Something went wrong...';
         },
     },
@@ -275,7 +288,7 @@ export const producersSlice = createSlice({
 });
 //redux saving methods in action object
 export const {addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, setProductChecked, setAcceptDeclineProducts,
-    setDeclineAllProducts, setAcceptAllProducts, setSaveData
+    setDeclineAllProducts, setAcceptAllProducts, setAgreementCheckbox
 } = producersSlice.actions;
 
 export default producersSlice.reducer

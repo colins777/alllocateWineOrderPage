@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import './App.scss';
 import Producer from "./components/Producer/Producer";
-import {getProducers, setDeclineAllProducts, setAcceptAllProducts, saveAllData} from "./redux/features/producers/producersSlice";
+import {getProducers, setDeclineAllProducts, setAcceptAllProducts, saveAllData, setAgreementCheckbox} from "./redux/features/producers/producersSlice";
 import {useSelector, useDispatch} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
@@ -23,7 +23,9 @@ function App() {
     const confirmationDeadline = useSelector(state => state.producersData.confirmation_deadline);
     const order_status = useSelector(state => state.producersData.order_status);
     const {saveBtnDisabled} = useSelector(state => state.producersData);
+
     const {error} = useSelector(state => state.producersData);
+    const{loading} = useSelector(state => state.producersData);
 
     useEffect(() => {
         dispatch(getProducers())
@@ -50,7 +52,12 @@ function App() {
         dispatch(saveAllData(stateDataForBackend))
     };
 
-    //saveAllData
+    //Agreement checkbox
+    const [agreement, setAgreement] = useState(false);
+    const agreementHandler = () => {
+        setAgreement(!agreement);
+        dispatch(setAgreementCheckbox(!agreement));
+    };
 
   return (
     <div className="App">
@@ -235,25 +242,24 @@ function App() {
                         <label htmlFor="" className="filter checkbox-container">
                             <input type="checkbox"
                                    className="form-control"
-                                   name="agreetment"
+                                   name="agreement"
+                                   value={agreement}
+                                   onChange={(e) => {agreementHandler()}}
                             />
                             <span className="checkmark"></span>
                         </label>
                         <span className="note-text">I have read and agreed to Allocate.Wine’s <a className="link">Terms & Conditions</a></span>
-
                     </div>
-
-
-
                 </div>
 
                 <AddressModal/>
 
                 <div className="send-form">
-                    <button type="submit" className={saveBtnDisabled ? 'save-btn brown-btn disabled' : 'save-btn brown-btn'}
-                        onClick={(e) => {e.preventDefault(); saveDataHandler(); }}
+                    <button type="submit"
+                            className={saveBtnDisabled ? 'save-btn brown-btn disabled' : 'save-btn brown-btn'}
+                            onClick={(e) => {e.preventDefault(); saveDataHandler(); }}
                     >
-                        {saveBtnDisabled ? "Saving..." : 'Save changes'}
+                        {loading ? "Saving..." : 'Save changes'}
                     </button>
                     {error ? error : ''}
                 </div>
