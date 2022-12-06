@@ -153,8 +153,7 @@ export const producersSlice = createSlice({
 
                 } else {
                     //Accepted
-                    //@TODO not calculating correct total sum after switching from Decline, not added storage_fee, shipping +
-                    //@TODO uncorrect calculating total sum if radio buttons not setted
+                    //@TODO not correct calculation of total sum if radio buttons not setted
                     let productsAcceptedSum = 0;
                     state.producers[action.payload.producerIndex].products.map((product, index) => {
                         const currentProduct = state.producers[action.payload.producerIndex].products[index];

@@ -1,18 +1,16 @@
 import React from "react";
 import './AddressModal.scss';
 import {useSelector, useDispatch} from "react-redux";
-import {setShowHideAddressModal} from "../../redux/features/addressModal/addressModalSlice";
+import {setHideAddressModal} from "../../redux/features/addressModal/addressModalSlice";
 
 const AddressModal = () => {
     const dispatch = useDispatch();
     const showAddressModal = useSelector((state) => {return state.addressModalData.modalShow});
 
-
-    console.log('showAddressModal', showAddressModal)
-
     const hideAddressModalHandler = () => {
-        dispatch(setShowHideAddressModal(false))
-    }
+        dispatch(setHideAddressModal())
+    };
+
 
     return (
         <div className={showAddressModal ? 'r-address-modal active' : 'r-address-modal hide'}>
@@ -41,6 +39,79 @@ const AddressModal = () => {
                             <span className="field">France</span>
                         </div>
                     </div>
+                    <div className="contact-information">
+                        <h4 className="title">Enter your contact information</h4>
+                        <div className="inputs-wrap">
+                            <input type="email" placeholder="Email"/>
+                            <input type="phone" placeholder="phone"/>
+                        </div>
+                    </div>
+
+
+                    <div className="selected-products">
+                        <div className="title">
+                            <span className="selected-items-title">Selected items</span>
+                            <span className="change-qty">Change quantity</span>
+                        </div>
+                        <div className="product">
+                            <div className="r-row">
+                                <div className="left">
+                                    <span className="producer-name">Bass Philip</span>
+                                    <span className="producer-name">Pinot Noir 2019</span>
+                                </div>
+                                <div className="offered">
+                                    <div className="requested-edit">
+                                        <button
+
+                                        >-
+                                        </button>
+                                        <input type="number"
+                                               className="requested-input"
+                                               name=""
+                                               value=""
+
+                                        />
+
+                                        <button
+
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="product">
+                            <div className="r-row">
+                                <div className="left">
+                                    <span className="producer-name">Petrov test</span>
+                                    <span className="producer-name">Pinot Noir 1990</span>
+                                </div>
+                                <div className="offered">
+                                    <div className="requested-edit">
+                                        <button
+
+                                        >-
+                                        </button>
+                                        <input type="number"
+                                               className="requested-input"
+                                               name=""
+                                               value=""
+
+                                        />
+
+                                        <button
+
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/*selected-products*/}
                 </div> {/*/inner*/}
                 <div className="buttons">
                     <a className="cancel modal-btn"

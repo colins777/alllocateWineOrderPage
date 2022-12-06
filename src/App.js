@@ -6,6 +6,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import AddressModal from "./components/AddressModal/AddressModal";
+import {setShowAddressModal} from "./redux/features/addressModal/addressModalSlice";
 
 function App() {
     //dispatch for changing state of component
@@ -25,7 +26,7 @@ function App() {
     const {saveBtnDisabled} = useSelector(state => state.producersData);
 
     const {error} = useSelector(state => state.producersData);
-    const{loading} = useSelector(state => state.producersData);
+    const{loading, showAddressModal} = useSelector(state => state.producersData);
 
     useEffect(() => {
         dispatch(getProducers())
@@ -58,6 +59,18 @@ function App() {
         setAgreement(!agreement);
         dispatch(setAgreementCheckbox(!agreement));
     };
+
+
+    const producersList = useSelector((state) => {
+        console.log('producersList', state.producersData.producers)
+        return state.producersData.producers
+    });
+
+    const dataForAddressModal = {'producers': producersList, 'modalShow' : !showAddressModal}
+
+    const showAddressModalHandlerApp = () => {
+        dispatch(setShowAddressModal(dataForAddressModal))
+    }
 
   return (
     <div className="App">
@@ -138,7 +151,11 @@ function App() {
         <div className="checkbox-all-block">
             <input type="checkbox" className="form-control"/>
             <div className="right-side">
-                <a className="allocation-btn grey">SHIP / STORE</a>
+                <a className="allocation-btn grey"
+                   onClick={() => showAddressModalHandlerApp()}
+                >
+                    SHIP / STORE
+                </a>
                 <a className="allocation-btn gold"
                    onClick={(e) => {e.preventDefault(); acceptAllProductsHandler()}}
                 >

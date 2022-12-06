@@ -61,6 +61,46 @@
           }
         }
       }
+
+      .selected-products {
+        .title {
+          display: flex;
+          justify-content: space-between;
+        }
+        .product {
+          margin-bottom: 20px;
+          .r-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+          .offered {
+            margin-left: auto;
+            &.declined {
+              text-decoration: line-through;
+            }
+            .requested-edit {
+              display: flex;
+              align-items: center;
+              height: 35px;
+              button {
+                height: 100%;
+                min-width: 28px;
+                background-color: #B4936A;
+                color: #fff;
+                border: none;
+                outline: none;
+              }
+              .requested-input {
+                max-height: 35px;
+                height: 100%;
+                vertical-align: middle;
+                text-align: center;
+              }
+            }
+          }
+        }
+      }
     }
 
     .buttons {

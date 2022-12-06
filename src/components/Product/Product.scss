@@ -86,6 +86,8 @@
         outline: none;
       }
       .requested-input {
+        flex-shrink: 0;
+        max-width: 60px;
         vertical-align: middle;
         text-align: center;
       }

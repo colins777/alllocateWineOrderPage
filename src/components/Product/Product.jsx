@@ -2,7 +2,7 @@ import React, {useRef, useState} from "react";
 import "./Product.scss";
 import {addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, setProductChecked} from "../../redux/features/producers/producersSlice"
 import {useDispatch, useSelector} from "react-redux";
-import {setShowHideAddressModal} from "../../redux/features/addressModal/addressModalSlice";
+import {setShowAddressModal} from "../../redux/features/addressModal/addressModalSlice";
 
 const Product = function ({productData, producerId, currency}) {
     const dispatch = useDispatch();
@@ -72,11 +72,17 @@ const Product = function ({productData, producerId, currency}) {
         }
         const actionData = {...productDataAction, 'product_checked' : value }
         dispatch(setProductChecked(actionData))
-    }
+    };
 
     //Address modal
+    const showAddressModal = useSelector((state) => {return state.addressModalData.modalShow});
+    const producersList = useSelector((state) => {
+        return state.producersData.producers
+    });
+    const dataForAddressModal = {'producers': producersList, 'modalShow' : !showAddressModal}
     const showAddressModalHandler = () => {
-        dispatch(setShowHideAddressModal(true))
+        //send the arr of products IDs, IDs get from state if product checked
+        dispatch(setShowAddressModal(dataForAddressModal))
     };
 
 

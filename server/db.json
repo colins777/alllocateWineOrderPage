@@ -32,13 +32,16 @@
             "price": 1200,
             "price_per_pack": "12 bottles Carton (75cl)",
             "delivery_option": "Ship to home - 1 qty",
+            "available": 12,
             "requested": 1,
             "offered": 21,
             "offered_allow_edit": true,
             "total_sum": 25200,
             "same_producer": true,
-            "checked": true,
-            "declined": false
+            "checked": false,
+            "declined": false,
+            "added_to_address": false,
+            "producer_name": "Bass Philip"
           }
         ]
       },
@@ -56,13 +59,16 @@
             "price": 400,
             "price_per_pack": "12 bottles Carton (75cl)",
             "delivery_option": "Ship to Home - 1 qty",
+            "available": 200,
             "requested": 1,
             "offered": 55,
             "offered_allow_edit": true,
             "total_sum": 22000,
             "same_producer": true,
             "checked": false,
-            "declined": false
+            "declined": false,
+            "added_to_address": false,
+            "producer_name": "Petro test"
           }
         ]
       },
@@ -80,13 +86,16 @@
             "price": 123,
             "price_per_pack": "6 bottles Carton (75cl)",
             "delivery_option": "Ship to home - 1 qty",
+            "available": 9,
             "requested": 1,
             "offered": 2,
             "offered_allow_edit": false,
             "total_sum": 246,
             "same_producer": true,
-            "checked": true,
-            "declined": false
+            "checked": false,
+            "declined": false,
+            "added_to_address": false,
+            "producer_name": "SCREAMING EAGLE"
           },
           {
             "id": 104,
@@ -95,13 +104,16 @@
             "price": 1400,
             "price_per_pack": "8 bottles OWC (75cl)",
             "delivery_option": "Delivery option: Not selected",
+            "available": 90,
             "requested": 1,
             "offered": 2,
             "offered_allow_edit": false,
             "total_sum": 2800,
             "same_producer": false,
-            "checked": true,
-            "declined": false
+            "checked": false,
+            "declined": false,
+            "added_to_address": false,
+            "producer_name": "SCREAMING EAGLE"
           }
         ]
       }
@@ -202,7 +214,8 @@
             "total_sum": 25200,
             "same_producer": true,
             "checked": true,
-            "declined": false
+            "declined": false,
+            "producer_name": "Bass Philip"
           }
         ]
       },
@@ -226,7 +239,8 @@
             "total_sum": 22000,
             "same_producer": true,
             "checked": false,
-            "declined": false
+            "declined": false,
+            "producer_name": "Petro test"
           }
         ]
       },
@@ -250,7 +264,9 @@
             "total_sum": 246,
             "same_producer": true,
             "checked": true,
-            "declined": false
+            "declined": false,
+            "producer_name": "SCREAMING EAGLE"
+
           },
           {
             "id": 104,
@@ -265,7 +281,8 @@
             "total_sum": 2800,
             "same_producer": false,
             "checked": true,
-            "declined": false
+            "declined": false,
+            "producer_name": "SCREAMING EAGLE"
           }
         ]
       }
