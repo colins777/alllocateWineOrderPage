@@ -49,7 +49,7 @@ const Producer = function ({producerData, producerId, currency}) {
             <div className="producer-actions">
                 <div className="left-side">
 
-                    <label htmlFor="" className="producer-all-check">
+                    <label htmlFor="" className="checkbox-container">
                         <input type="checkbox"
                                className="form-control"
                                name={'[producer_id][' + producerData.id +'][check_all_producer_products]'}
@@ -58,6 +58,7 @@ const Producer = function ({producerData, producerId, currency}) {
                                disabled={productsDeclined ? 'disabled' : ''}
                                onChange={(e) => checkAllProducerProductsHandler(e.target.value)}
                         />
+                        <span className="checkmark"></span>
                     </label>
 
                     <div className="text">
@@ -70,28 +71,30 @@ const Producer = function ({producerData, producerId, currency}) {
                         <span className="decision">Your decision</span>
                         <div className="radio-buttons">
                             <div className="label-wrap">
-                                <label htmlFor="accept">
+                                <label htmlFor={'[accept]' + producerData.id} className="radio-container">
                                     <span className="title">Accept</span>
                                     <input type="radio"
-                                           id="accept"
+                                           id={'[accept]' + producerData.id}
                                            name={'producer_id[' + producerData.id +'][accept_decline]'}
                                            value="1"
                                           checked={!productsDeclined ? 'checked' : ''}
-                                           onChange={ (e) => acceptDeclineHandler(e.target.value)}
+                                           onChange={ (e) =>  {acceptDeclineHandler(e.target.value)}}
                                     />
+                                    <span className="radio-checkmark"></span>
                                 </label>
                             </div>
 
                             <div className="label-wrap">
-                                <label htmlFor="decline">
+                                <label htmlFor={'[decline]' + producerData.id} className="radio-container">
                                     <span className="title">Decline</span>
                                     <input type="radio"
-                                           id="decline"
+                                           id={'[decline]' + producerData.id}
                                            name={'producer_id[' + producerData.id +'][accept_decline]'}
                                            value="0"
                                            checked={productsDeclined ? 'checked' : ''}
-                                           onChange={ (e) => acceptDeclineHandler(e.target.value)}
+                                           onChange={ (e) => {acceptDeclineHandler(e.target.value)}}
                                     />
+                                    <span className="radio-checkmark"></span>
                                 </label>
                             </div>
                         </div>

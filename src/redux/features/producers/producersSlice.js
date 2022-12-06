@@ -152,7 +152,7 @@ export const producersSlice = createSlice({
                         if (producer.declined) {
                             producersDeclined.push('declined')
                         }
-                    })
+                    });
 
                     if (producersQty === producersDeclined.length) {
                         state.total_cost = 0;

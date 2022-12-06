@@ -86,7 +86,7 @@ const Product = function ({productData, producerId, currency}) {
     return (
         <div className="product-item">
             <div className="product-checkbox">
-                <label htmlFor=""  className="filter checkbox-container" >
+                <label htmlFor=""  className="checkbox-container" >
                     <input type="checkbox"
                            className="form-control"
                            name={'[producer_id][' + producerId + '][product_id][' + productData.id + '][product_checked]'}

@@ -162,12 +162,16 @@ function App() {
 
         <div className="checkbox-all-block">
             <div className="checked-products-qty">
-                <input type="checkbox" className="form-control"
-                       value={selectedAllProducts}
-                       checked={selectedAllProducts}
-                       onChange={(e) => selectAllProductsHandler(e.target.value)}
+                <label htmlFor="" className="checkbox-container">
+                    <input type="checkbox" className="form-control"
+                           value={selectedAllProducts}
+                           checked={selectedAllProducts}
+                           onChange={(e) => selectAllProductsHandler(e.target.value)}
 
-                />
+                    />
+                    <span className="checkmark"></span>
+                </label>
+
                 {productsSelected > 0 ?
                     <span className="number">{productsSelected} selected</span>
                     : ''
