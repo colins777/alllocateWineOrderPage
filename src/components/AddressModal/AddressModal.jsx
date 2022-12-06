@@ -62,17 +62,19 @@ const AddressModal = () => {
                                 <div className="offered">
                                     <div className="requested-edit">
                                         <button
-
+                                            onClick={() => console.log('-')}
                                         >-
                                         </button>
                                         <input type="number"
                                                className="requested-input"
                                                name=""
                                                value=""
+                                               onChange={() => console.log('-')}
 
                                         />
 
                                         <button
+                                            onClick={() => console.log('+')}
 
                                         >
                                             +

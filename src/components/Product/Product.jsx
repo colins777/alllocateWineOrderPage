@@ -65,12 +65,7 @@ const Product = function ({productData, producerId, currency}) {
     };
 
     const setCheckedProductHandler = (value) => {
-        if (value == 'true') {
-            value = false
-        } else {
-            value = true
-        }
-        const actionData = {...productDataAction, 'product_checked' : value }
+        const actionData = {...productDataAction, 'product_checked' : +value }
         dispatch(setProductChecked(actionData))
     };
 
@@ -96,7 +91,7 @@ const Product = function ({productData, producerId, currency}) {
                            className="form-control"
                            name={'[producer_id][' + producerId + '][product_id][' + productData.id + '][product_checked]'}
                            value={productChecked}
-                           checked={productChecked ? true : false}
+                           checked={productChecked}
                            onChange={(e) => setCheckedProductHandler(e.target.value)}
                            disabled={productDeclined ? 'disabled' : ''}
                     />

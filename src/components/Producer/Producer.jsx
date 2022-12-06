@@ -1,7 +1,7 @@
 import React from "react";
 import "./Producer.scss"
 import Product from "../Product/Product";
-import {setAcceptDeclineProducts} from "../../redux/features/producers/producersSlice";
+import {setAcceptDeclineProducts, setCheckedAllProducerProducts} from "../../redux/features/producers/producersSlice";
 import {useSelector, useDispatch} from "react-redux";
 
 const Producer = function ({producerData, producerId, currency}) {
@@ -14,7 +14,7 @@ const Producer = function ({producerData, producerId, currency}) {
 
     const getProducerIndex = function () {
         let producerIndexInner = null;
-      //  console.log('producerData', producerData)
+        //console.log('producerData', producerData)
 
         producersList.map((producer, index) => {
             if (producer.id === producerId) producerIndexInner = index;
@@ -26,10 +26,7 @@ const Producer = function ({producerData, producerId, currency}) {
          producerId,
         'producerIndex': getProducerIndex(),
     };
-    //console.log('productDataAction', productDataAction)
 
-
- //console.log('producerData', producerData)
     const acceptDeclineHandler = (value) => {
         const dataAcceptDecline = {...productDataAction, 'acceptDecline' : +value}
         dispatch(setAcceptDeclineProducts(dataAcceptDecline))
@@ -39,11 +36,13 @@ const Producer = function ({producerData, producerId, currency}) {
         return state.producersData.producers[getProducerIndex()].declined;
     });
 
-    const checkAllProducersProductsHandler  = (value) => {
-      console.log('checkAllProducersProductsHandler:', value)
-    }
+    const checkAllProducerProductsHandler  = (value) => {
+      console.log('checkAllProducerProductsHandler:', value)
 
-  // console.log('productsDeclined', productsDeclined)
+        const actionData = {...productDataAction, 'producer_checked' : +value }
+
+        dispatch(setCheckedAllProducerProducts(actionData))
+    };
 
     return (
         <div>
@@ -54,10 +53,10 @@ const Producer = function ({producerData, producerId, currency}) {
                         <input type="checkbox"
                                className="form-control"
                                name={'[producer_id][' + producerData.id +'][check_all_producer_products]'}
-                               //checked={!productsDeclined ? '' : 'checked'}
-                                value={productsDeclined}
+                               value={producerData.checked}
+                               checked={producerData.checked}
                                disabled={productsDeclined ? 'disabled' : ''}
-                               onChange={(e) => checkAllProducersProductsHandler(e.target.value)}
+                               onChange={(e) => checkAllProducerProductsHandler(e.target.value)}
                         />
                     </label>
 

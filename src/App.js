@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import './App.scss';
 import Producer from "./components/Producer/Producer";
-import {getProducers, setDeclineAllProducts, setAcceptAllProducts, saveAllData, setAgreementCheckbox} from "./redux/features/producers/producersSlice";
+import {getProducers, setDeclineAllProducts, setAcceptAllProducts, saveAllData, setAgreementCheckbox, setSelectAllProducts} from "./redux/features/producers/producersSlice";
 import {useSelector, useDispatch} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
@@ -70,6 +70,18 @@ function App() {
 
     const showAddressModalHandlerApp = () => {
         dispatch(setShowAddressModal(dataForAddressModal))
+    }
+
+    //All products checkbox
+    const productsSelected = useSelector(state => state.producersData.checkedProductsQty);
+    const selectedAllProducts = useSelector(state => state.producersData.selectedAllProducts);
+
+    console.log('selectedAllProducts 111', selectedAllProducts)
+
+    //Ship/store btn
+    const selectAllProductsHandler = (value) => {
+        //console.log('selectAllProductsHandler', value)
+        dispatch(setSelectAllProducts(+value))
     }
 
   return (
@@ -149,9 +161,22 @@ function App() {
         </div>
 
         <div className="checkbox-all-block">
-            <input type="checkbox" className="form-control"/>
+            <div className="checked-products-qty">
+                <input type="checkbox" className="form-control"
+                       value={selectedAllProducts}
+                       checked={selectedAllProducts}
+                       onChange={(e) => selectAllProductsHandler(e.target.value)}
+
+                />
+                {productsSelected > 0 ?
+                    <span className="number">{productsSelected} selected</span>
+                    : ''
+                }
+
+            </div>
+
             <div className="right-side">
-                <a className="allocation-btn grey"
+                <a className={productsSelected > 0 ? 'allocation-btn grey active' : 'allocation-btn grey'}
                    onClick={() => showAddressModalHandlerApp()}
                 >
                     SHIP / STORE

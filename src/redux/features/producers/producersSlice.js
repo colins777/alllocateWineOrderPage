@@ -17,8 +17,9 @@ const initialState = {
     //not using on backend
     loading: true,
     saveBtnDisabled: true,
-    agreement: false,
-    error: false
+    error: false,
+    checkedProductsQty: 0,
+    selectedAllProducts: 0
 };
 
 export const getProducers = createAsyncThunk(
@@ -116,8 +117,16 @@ export const producersSlice = createSlice({
         },
 
         setProductChecked: (state, action) => {
-            //console.log('action', action)
-            state.producers[action.payload.producerIndex].products[action.payload.productIndex].checked = action.payload.product_checked
+            console.log('action', action);
+
+            if (action.payload.product_checked) {
+                state.producers[action.payload.producerIndex].products[action.payload.productIndex].checked = 0;
+                state.checkedProductsQty = state.checkedProductsQty - 1;
+            } else {
+                state.producers[action.payload.producerIndex].products[action.payload.productIndex].checked = 1;
+                state.checkedProductsQty = state.checkedProductsQty + 1;
+            }
+
         },
 
         //Producer Accept/Decline
@@ -225,12 +234,64 @@ export const producersSlice = createSlice({
         },
 
         setAgreementCheckbox: (state, action) => {
-            console.log('setAgreementCheckbox', action)
+            //console.log('setAgreementCheckbox', action)
             state.agreement =  action.payload;
             if (action.payload) {
                 state.saveBtnDisabled = false;
             } else {
                 state.saveBtnDisabled = true;
+            }
+        },
+        setCheckedAllProducerProducts: (state, action) => {
+
+            console.log(' setCheckedAllProducerProducts', action);
+            const producerIndex = state.producers[action.payload.producerIndex];
+
+            if (action.payload.producer_checked) {
+                producerIndex.checked = 0;
+                let productQty = 0;
+                producerIndex.products.map((product, index) => {
+                    productQty++;
+                    producerIndex.products[index].checked = false;
+                });
+                state.checkedProductsQty -= productQty;
+            } else {
+                let productQty = 0;
+                producerIndex.checked = 1;
+                producerIndex.products.map((product, index) => {
+                    productQty++;
+                    producerIndex.products[index].checked = true;
+                });
+                state.checkedProductsQty += productQty;
+            }
+        },
+
+        setSelectAllProducts: (state, action) => {
+            console.log('setSelectAllProducts', action)
+            if (action.payload) {
+                state.selectedAllProducts = 0;
+               // let productQty = 0;
+
+                state.producers.map((producer, index) => {
+                    state.producers[index].checked = 0;
+                    producer.products.map((product, i) => {
+                        state.checkedProductsQty = 0;
+                        state.producers[index].products[i].checked = false;
+                    })
+                })
+            } else {
+                state.selectedAllProducts = 1;
+                let productQty = 0;
+
+                state.producers.map((producer, index) => {
+                    state.producers[index].checked = 1;
+                    producer.products.map((product, i) => {
+                        productQty++;
+                        state.producers[index].products[i].checked = true;
+                    })
+                })
+                state.checkedProductsQty = productQty;
+
             }
         }
     },
@@ -287,7 +348,7 @@ export const producersSlice = createSlice({
 });
 //redux saving methods in action object
 export const {addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, setProductChecked, setAcceptDeclineProducts,
-    setDeclineAllProducts, setAcceptAllProducts, setAgreementCheckbox
+    setDeclineAllProducts, setAcceptAllProducts, setAgreementCheckbox, setCheckedAllProducerProducts, setSelectAllProducts
 } = producersSlice.actions;
 
 export default producersSlice.reducer

@@ -139,6 +139,14 @@
     display: flex;
     justify-content: space-between;
     padding: 16px 25px;
+    .checked-products-qty {
+      display: flex;
+      .number {
+        font-size: 16px;
+        color: #1A1A1A;
+        margin-left: 15px;
+      }
+    }
 
     .right-side {
       .allocation-btn {
@@ -153,6 +161,12 @@
         &.grey {
           color: #B3B3B3;
           border: 1px solid #B3B3B3;
+          pointer-events: none;
+          &.active {
+            color: #B4936A;
+            border: 1px solid #B4936A;
+            pointer-events: inherit;
+          }
         }
 
         &.gold {
