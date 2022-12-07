@@ -41,7 +41,8 @@
             "checked": 0,
             "declined": false,
             "added_to_address": false,
-            "producer_name": "Bass Philip"
+            "producer_name": "Bass Philip",
+            "producer_id": 1
           }
         ]
       },
@@ -68,7 +69,8 @@
             "checked": 0,
             "declined": false,
             "added_to_address": false,
-            "producer_name": "Petro test"
+            "producer_name": "Petro test",
+            "producer_id": 2
           }
         ]
       },
@@ -95,7 +97,8 @@
             "checked": 0,
             "declined": false,
             "added_to_address": false,
-            "producer_name": "SCREAMING EAGLE"
+            "producer_name": "SCREAMING EAGLE",
+            "producer_id": 3
           },
           {
             "id": 104,
@@ -113,7 +116,8 @@
             "checked": 0,
             "declined": false,
             "added_to_address": false,
-            "producer_name": "SCREAMING EAGLE"
+            "producer_name": "SCREAMING EAGLE",
+            "producer_id": 3
           }
         ]
       }

@@ -3,6 +3,7 @@ import "./Product.scss";
 import {addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, setProductChecked} from "../../redux/features/producers/producersSlice"
 import {useDispatch, useSelector} from "react-redux";
 import {setShowAddressModal} from "../../redux/features/addressModal/addressModalSlice";
+import ChangeQuantity from "../ChangeQuantity/ChangeQuantity";
 
 const Product = function ({productData, producerId, currency}) {
     const dispatch = useDispatch();
@@ -49,20 +50,6 @@ const Product = function ({productData, producerId, currency}) {
     const productDeclined = useSelector((state) => {
         return state.producersData.producers[productDataAction.producerIndex].products[productDataAction.productIndex].declined;
     });
-
-    const addProductClickHandler = (inputValue) => {
-        dispatch(addProdPriceInTotalCost(productDataAction))
-
-    };
-
-    const minusProductClickHandler = () => {
-        dispatch(minusProdPriceInTotalCost(productDataAction))
-    };
-
-    const setOfferedQtyHandler = (qty) => {
-        const actionData = {...productDataAction, 'offered_qty' : +qty }
-        dispatch(setOfferedQty(actionData))
-    };
 
     const setCheckedProductHandler = (value) => {
         const actionData = {...productDataAction, 'product_checked' : +value }
@@ -129,24 +116,11 @@ const Product = function ({productData, producerId, currency}) {
 
             <span className={!productDeclined ? 'offered table-cell' : 'offered table-cell declined'}>
                 {productData.offered_allow_edit && !productDeclined ?
-                    (<div className="requested-edit">
-                        <button disabled={offeredQty <= 0 ? 'disabled' : ''}
-                            onClick={(e) => {e.preventDefault(); minusProductClickHandler ()}}
-                        >-
-                        </button>
-                        <input type="number"
-                               className="requested-input"
-                               name={'[producer_id][' + producerId + '][product_id][' + productData.id + '][offered_input]'}
-                               value={offeredQty}
-                               onChange={(e) => setOfferedQtyHandler(e.target.value)}
-                        />
-
-                        <button
-                            onClick={(e) => {e.preventDefault(); addProductClickHandler (e.target.value)}}
-                        >
-                            +
-                        </button>
-                    </div>)
+                    <ChangeQuantity
+                        offeredQty={offeredQty}
+                        productData={productData}
+                        productDataAction={productDataAction}
+                    />
                     : offeredQty
                 }
             </span>

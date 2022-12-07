@@ -2,6 +2,7 @@ import React from "react";
 import './AddressModal.scss';
 import {useSelector, useDispatch} from "react-redux";
 import {setHideAddressModal} from "../../redux/features/addressModal/addressModalSlice";
+import {ProductModal} from "../ProductModal/ProductModal";
 
 const AddressModal = () => {
     const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const AddressModal = () => {
         dispatch(setHideAddressModal())
     };
 
+    const checkedProducts = useSelector((state) => {return state.addressModalData.checked_products});
 
     return (
         <div className={showAddressModal ? 'r-address-modal active' : 'r-address-modal hide'}>
@@ -42,8 +44,17 @@ const AddressModal = () => {
                     <div className="contact-information">
                         <h4 className="title">Enter your contact information</h4>
                         <div className="inputs-wrap">
-                            <input type="email" placeholder="Email"/>
-                            <input type="phone" placeholder="phone"/>
+                            <label htmlFor="">
+                                <span>Email</span>
+                                <input type="email" placeholder="Email"/>
+                            </label>
+
+                            <label htmlFor="">
+                                <span>Telephone</span>
+                                <input type="phone" placeholder="phone"/>
+                            </label>
+
+
                         </div>
                     </div>
 
@@ -53,65 +64,10 @@ const AddressModal = () => {
                             <span className="selected-items-title">Selected items</span>
                             <span className="change-qty">Change quantity</span>
                         </div>
-                        <div className="product">
-                            <div className="r-row">
-                                <div className="left">
-                                    <span className="producer-name">Bass Philip</span>
-                                    <span className="producer-name">Pinot Noir 2019</span>
-                                </div>
-                                <div className="offered">
-                                    <div className="requested-edit">
-                                        <button
-                                            onClick={() => console.log('-')}
-                                        >-
-                                        </button>
-                                        <input type="number"
-                                               className="requested-input"
-                                               name=""
-                                               value=""
-                                               onChange={() => console.log('-')}
 
-                                        />
-
-                                        <button
-                                            onClick={() => console.log('+')}
-
-                                        >
-                                            +
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="product">
-                            <div className="r-row">
-                                <div className="left">
-                                    <span className="producer-name">Petrov test</span>
-                                    <span className="producer-name">Pinot Noir 1990</span>
-                                </div>
-                                <div className="offered">
-                                    <div className="requested-edit">
-                                        <button
-
-                                        >-
-                                        </button>
-                                        <input type="number"
-                                               className="requested-input"
-                                               name=""
-                                               value=""
-
-                                        />
-
-                                        <button
-
-                                        >
-                                            +
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {checkedProducts.map((product) =>
+                            (<ProductModal product={product}/>))
+                        }
                     </div>
                     {/*selected-products*/}
                 </div> {/*/inner*/}
