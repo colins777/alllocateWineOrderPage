@@ -266,6 +266,21 @@ export const producersSlice = createSlice({
             }
         },
 
+        setSaveDataAddressModal: (state, action) => {
+            console.log('setSaveDataAddressModal Action', action)
+
+            const selectedForShippingProducts = action.payload;
+
+            //const allProducersInState = state.producers;
+
+            selectedForShippingProducts.map((product) => {
+                console.log('product map', product);
+
+              state.producers[product.producerIndex].products[product.productIndex].addresses.push(product)
+            })
+
+        },
+
         setSelectAllProducts: (state, action) => {
             console.log('setSelectAllProducts', action)
             if (action.payload) {
@@ -348,7 +363,8 @@ export const producersSlice = createSlice({
 });
 //redux saving methods in action object
 export const {addProdPriceInTotalCost, minusProdPriceInTotalCost, setOfferedQty, setProductChecked, setAcceptDeclineProducts,
-    setDeclineAllProducts, setAcceptAllProducts, setAgreementCheckbox, setCheckedAllProducerProducts, setSelectAllProducts
+    setDeclineAllProducts, setAcceptAllProducts, setAgreementCheckbox, setCheckedAllProducerProducts, setSelectAllProducts,
+    setSaveDataAddressModal
 } = producersSlice.actions;
 
 export default producersSlice.reducer

@@ -9,6 +9,7 @@ import {
 
 
 const ChangeQuantity = ({productDataAction}) => {
+    const dispatch = useDispatch();
 
     const offeredProdQty =
         useSelector(state => state.producersData.producers[productDataAction.producerIndex].products[productDataAction.productIndex].offered)
@@ -16,9 +17,7 @@ const ChangeQuantity = ({productDataAction}) => {
     const maxProductQty =
         useSelector(state => state.producersData.producers[productDataAction.producerIndex].products[productDataAction.productIndex].available)
 
-    const dispatch = useDispatch();
-
-    console.log('ChangeQuantity productDataAction', maxProductQty)
+    //console.log('ChangeQuantity productDataAction', maxProductQty)
 
     const minusProductClickHandler = () => {
          dispatch(minusProdPriceInTotalCost(productDataAction))

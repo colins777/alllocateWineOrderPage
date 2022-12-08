@@ -3,18 +3,46 @@ import './AddressModal.scss';
 import {useSelector, useDispatch} from "react-redux";
 import {setHideAddressModal} from "../../redux/features/addressModal/addressModalSlice";
 import {ProductModal} from "../ProductModal/ProductModal";
+import DropdownAddressesSelect from "../DropdownAddressesSelect/DropdownAddressesSelect";
+import {getProducerIndexInArray} from "../../helpers/getProducerIndexInArray";
+import {getProductIndexInArray} from "../../helpers/getProductIndexInArray";
+import {setSaveDataAddressModal} from "../../redux/features/producers/producersSlice";
 
 const AddressModal = () => {
     const dispatch = useDispatch();
     const showAddressModal = useSelector((state) => {return state.addressModalData.modalShow});
-
     const hideAddressModalHandler = () => {
         dispatch(setHideAddressModal())
     };
 
     const checkedProducts = useSelector((state) => {return state.addressModalData.checked_products});
-
     const [showChangeQty, setChangeQty] = useState(false);
+    const dropdownAddressesList = useSelector(state => state.producersData.addresses);
+    const allProducersArr = useSelector(state => state.producersData.producers);
+    const selectedAddressId = +useSelector(state => state.selectAddressesData.chosenAddressId);
+
+
+
+    const actionData = [];
+
+    checkedProducts.map((product, p_index) => {
+        let producerIndex = getProducerIndexInArray(allProducersArr, product.producer_id);
+        let productIndex = getProductIndexInArray(allProducersArr, producerIndex, product.id);
+        //for prevent error - /object is not extensible/
+        let newProduct = {...product};
+
+        newProduct.productIndex = productIndex;
+        newProduct.producerIndex = producerIndex;
+        newProduct.selected_address_id = selectedAddressId;
+        newProduct.product_total_selected = product.offered;
+        actionData.push(newProduct)
+    });
+
+    //console.log(' actionData',  actionData)
+
+    const saveDataAddressModal = () => {
+       dispatch(setSaveDataAddressModal(actionData))
+    };
 
     return (
         <div className={showAddressModal ? 'r-address-modal active' : 'r-address-modal hide'}>
@@ -32,10 +60,15 @@ const AddressModal = () => {
                     
                     <div className="destination">
                         <span className="title">Destination</span>
-                        <select name="" id="" className="select-address">
+
+                        {/*<select name="" id="" className="select-address">
                             <option value="1">Store with Burgundy Wine Bond</option>
                             <option value="2">Store 2</option>
-                        </select>
+                        </select>*/}
+                        <DropdownAddressesSelect
+                            addresses={dropdownAddressesList}
+                        />
+
                         <div className="address-fields">
                             <span className="field">Burgundy Wine Bond</span>
                             <span className="field">4B rue de Romelet</span>
@@ -83,7 +116,11 @@ const AddressModal = () => {
                     >
                         Cancel
                     </a>
-                    <a className="save modal-btn">Save</a>
+                    <a className="save modal-btn"
+                       onClick={(e) => {e.preventDefault(); saveDataAddressModal()}}
+                    >
+                        Save
+                    </a>
                 </div>
             </div> {/*modal__content*/}
 

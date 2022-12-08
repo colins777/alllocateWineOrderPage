@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import ChangeQuantity from "../ChangeQuantity/ChangeQuantity";
 import {useSelector} from "react-redux";
+import {getProductIndexInArray} from "../../helpers/getProductIndexInArray";
+import {getProducerIndexInArray} from "../../helpers/getProducerIndexInArray";
 
 export const ProductModal = ({product, showChangeQty}) => {
 
@@ -8,7 +10,7 @@ export const ProductModal = ({product, showChangeQty}) => {
 
     //console.log('producersData', producersData)
 
-    const getProducerIndex = function () {
+/*    const getProducerIndex = function () {
         let producerIndexInner = null;
         producersData.map((producer, index) => {
             if (producer.id === product.producer_id) producerIndexInner = index;
@@ -23,13 +25,16 @@ export const ProductModal = ({product, showChangeQty}) => {
             if (product_all.id === product.id) productIndexInner = index;
         })
         return productIndexInner;
-    };
+    };*/
+
+    const producerIndex = getProducerIndexInArray(producersData, product.producer_id);
+    const productIndex = getProductIndexInArray(producersData, producerIndex, product.id);
 
     const productDataAction = {
         'product_id': product.id,
         'price': product.price,
-        'producerIndex': getProducerIndex(),
-        'productIndex': getProductIndex(),
+        'producerIndex': producerIndex,
+        'productIndex': productIndex,
         'offered_qty': product.offered,
         'producerId': product.producer_id,
         'product_checked': product.checked

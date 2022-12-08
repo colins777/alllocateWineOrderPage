@@ -45,9 +45,9 @@
             "producer_id": 1,
             "addresses": [
               {
-                "id": 1,
+                "selected_address_id": 1,
                 "product_id": 101,
-                "product_total": 1
+                "product_total_selected": 1
               }
             ]
           }
@@ -77,7 +77,10 @@
             "declined": false,
             "added_to_address": false,
             "producer_name": "Petro test",
-            "producer_id": 2
+            "producer_id": 2,
+            "addresses": [
+
+            ]
           }
         ]
       },
@@ -105,7 +108,10 @@
             "declined": false,
             "added_to_address": false,
             "producer_name": "SCREAMING EAGLE",
-            "producer_id": 3
+            "producer_id": 3,
+            "addresses": [
+
+            ]
           },
           {
             "id": 104,
@@ -124,7 +130,10 @@
             "declined": false,
             "added_to_address": false,
             "producer_name": "SCREAMING EAGLE",
-            "producer_id": 3
+            "producer_id": 3,
+            "addresses": [
+
+            ]
           }
         ]
       }
@@ -155,7 +164,7 @@
         ],
         "email": "testasdasd@gmail.com",
         "phone": "050 37 33 123",
-        "address_name": "My home Petr test",
+        "address_name": "My default address",
         "first_name": "Petr",
         "last_name": "Testov",
         "street_address": "Chehova 8",
@@ -176,7 +185,7 @@
         ],
         "email": "rumyga@gmail.com",
         "phone": "099 00 33 123",
-        "address_name": "My home Petr test",
+        "address_name": "Kyiv city address",
         "first_name": "Yulya",
         "last_name": "Igorivna",
         "street_address": "Golovna 105",
@@ -192,7 +201,7 @@
         "producer_id": [],
         "email": "testasdasd@gmail.com",
         "phone": "050 37 33 123",
-        "address_name": "My home Petr test",
+        "address_name": "New York, USA address",
         "first_name": "Petr",
         "last_name": "Testov",
         "street_address": "Chehova 12",

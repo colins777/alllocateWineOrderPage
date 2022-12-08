@@ -62,7 +62,7 @@ function App() {
 
 
     const producersList = useSelector((state) => {
-        console.log('producersList', state.producersData.producers)
+        //console.log('producersList', state.producersData.producers)
         return state.producersData.producers
     });
 
