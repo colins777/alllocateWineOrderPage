@@ -92,10 +92,16 @@
       }
 
       .selected-products {
-        margin-top: 30px;
+        margin-top: 20px;
         .title {
           display: flex;
           justify-content: space-between;
+          padding-bottom: 20px;
+          .change-qty {
+            font-size: 16px;
+            color: #B4936A;
+            cursor: pointer;
+          }
         }
         .product {
           margin-bottom: 20px;
@@ -123,25 +129,8 @@
               &.declined {
                 text-decoration: line-through;
               }
-              .requested-edit {
-                display: flex;
-                align-items: center;
-                height: 35px;
-                button {
-                  height: 100%;
-                  min-width: 28px;
-                  background-color: #B4936A;
-                  color: #fff;
-                  border: none;
-                  outline: none;
-                }
-                .requested-input {
-                  max-width: 60px;
-                  max-height: 35px;
-                  height: 100%;
-                  vertical-align: middle;
-                  text-align: center;
-                }
+              .not-editing {
+                padding: 0 50px;
               }
             }
           }

@@ -84,6 +84,9 @@
         color: #fff;
         border: none;
         outline: none;
+        &.disabled {
+          background-color: #B3B3B3;
+        }
       }
       .requested-input {
         flex-shrink: 0;

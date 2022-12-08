@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import ChangeQuantity from "../ChangeQuantity/ChangeQuantity";
 import {useSelector} from "react-redux";
 
-export const ProductModal = ({product}) => {
+export const ProductModal = ({product, showChangeQty}) => {
 
     const producersData = useSelector((state) => state.producersData.producers);
 
@@ -35,9 +35,6 @@ export const ProductModal = ({product}) => {
         'product_checked': product.checked
     };
 
-    console.log('offeredQty', product.offered)
-
-
     return (
         <div className="product">
             <div className="r-row">
@@ -51,10 +48,14 @@ export const ProductModal = ({product}) => {
                     </div>
                 </div>
                 <div className="offered">
-                    <ChangeQuantity
-                        offeredQty={product.offered}
-                        productDataAction={productDataAction}
-                    />
+                    {showChangeQty ?
+                        <ChangeQuantity
+                            offeredQty={product.offered}
+                            productDataAction={productDataAction}
+                        />
+                        :
+                        <span className="not-editing">{product.offered}</span>
+                    }
                 </div>
             </div>
         </div>

@@ -1,0 +1,23 @@
+.requested-edit {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  button {
+    height: 100%;
+    min-width: 28px;
+    background-color: #B4936A;
+    color: #fff;
+    border: none;
+    outline: none;
+    &.disabled {
+      background-color: #B3B3B3;
+    }
+  }
+  .requested-input {
+    max-width: 60px;
+    max-height: 35px;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+  }
+}

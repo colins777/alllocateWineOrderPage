@@ -26,7 +26,7 @@ export const addressModalSlice = createSlice({
 
             if (action.payload.producers) {
                 action.payload.producers.map((producer) => {
-                    console.log('producer', producer)
+                   // console.log('producer', producer)
                         producer.products.map((product) => {
                             if (product.checked) {
                                 checkedProductsArr.push(product)
@@ -46,15 +46,6 @@ export const addressModalSlice = createSlice({
                 //3 push all data of each finded product in this address
                 //4 if address for different products saved in modal set checkbox disabled and disabled store btn
                 //5 if products not added in address user can add it in new address or existing address
-
-
-            //create object with key of productsIDs - like this 101102
-            // {
-            //     '101102' : [
-            //     {prod1},
-            //     {prod2},
-            // ]
-            // }
         },
         setHideAddressModal: (state, action) => {
             state.modalShow = false;

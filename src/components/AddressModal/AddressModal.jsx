@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import './AddressModal.scss';
 import {useSelector, useDispatch} from "react-redux";
 import {setHideAddressModal} from "../../redux/features/addressModal/addressModalSlice";
@@ -13,6 +13,8 @@ const AddressModal = () => {
     };
 
     const checkedProducts = useSelector((state) => {return state.addressModalData.checked_products});
+
+    const [showChangeQty, setChangeQty] = useState(false);
 
     return (
         <div className={showAddressModal ? 'r-address-modal active' : 'r-address-modal hide'}>
@@ -62,11 +64,15 @@ const AddressModal = () => {
                     <div className="selected-products">
                         <div className="title">
                             <span className="selected-items-title">Selected items</span>
-                            <span className="change-qty">Change quantity</span>
+                            <span className="change-qty"
+                                onClick={(e) => setChangeQty(!showChangeQty)}
+                            >
+                                Change quantity
+                            </span>
                         </div>
 
                         {checkedProducts.map((product) =>
-                            (<ProductModal product={product}/>))
+                            (<ProductModal product={product} key={product.id} showChangeQty={showChangeQty}/>))
                         }
                     </div>
                     {/*selected-products*/}

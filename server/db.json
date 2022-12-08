@@ -32,7 +32,7 @@
             "price": 1200,
             "price_per_pack": "12 bottles Carton (75cl)",
             "delivery_option": "Ship to home - 1 qty",
-            "available": 12,
+            "available": 30,
             "requested": 1,
             "offered": 21,
             "offered_allow_edit": true,
@@ -42,7 +42,14 @@
             "declined": false,
             "added_to_address": false,
             "producer_name": "Bass Philip",
-            "producer_id": 1
+            "producer_id": 1,
+            "addresses": [
+              {
+                "id": 1,
+                "product_id": 101,
+                "product_total": 1
+              }
+            ]
           }
         ]
       },
