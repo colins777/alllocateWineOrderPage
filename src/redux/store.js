@@ -3,6 +3,7 @@ import producersSlice from "./features/producers/producersSlice";
 import productItemSlice from "./features/product/productItemSlice";
 import addressModalSlice from "./features/addressModal/addressModalSlice";
 import dropdownAddressesSelectSlice from "./features/dropdownAddressesSelect/dropdownAddressesSelectSlice";
+import changeQuantitySlice from "./features/changeQuantity/changeQuantitySlice";
 
 
 export const store = configureStore({
@@ -10,7 +11,8 @@ export const store = configureStore({
     reducer: {
         producersData: producersSlice,
         addressModalData: addressModalSlice,
-        selectAddressesData: dropdownAddressesSelectSlice
+        selectAddressesData: dropdownAddressesSelectSlice,
+        changeQuantityData: changeQuantitySlice
         //productData: productItemSlice
     },
 });

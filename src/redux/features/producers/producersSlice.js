@@ -19,7 +19,8 @@ const initialState = {
     saveBtnDisabled: true,
     error: false,
     checkedProductsQty: 0,
-    selectedAllProducts: 0
+    selectedAllProducts: 0,
+    allProductsRestQty: []
 };
 
 export const getProducers = createAsyncThunk(
@@ -266,21 +267,6 @@ export const producersSlice = createSlice({
             }
         },
 
-        setSaveDataAddressModal: (state, action) => {
-            console.log('setSaveDataAddressModal Action', action)
-
-            const selectedForShippingProducts = action.payload;
-
-            //const allProducersInState = state.producers;
-
-            selectedForShippingProducts.map((product) => {
-                console.log('product map', product);
-
-              state.producers[product.producerIndex].products[product.productIndex].addresses.push(product)
-            })
-
-        },
-
         setSelectAllProducts: (state, action) => {
             console.log('setSelectAllProducts', action)
             if (action.payload) {
@@ -308,6 +294,21 @@ export const producersSlice = createSlice({
                 state.checkedProductsQty = productQty;
 
             }
+        },
+        setSaveDataAddressModal: (state, action) => {
+            console.log('setSaveDataAddressModal Action', action)
+
+            const selectedForShippingProducts = action.payload;
+
+            //const allProducersInState = state.producers;
+
+            selectedForShippingProducts.map((product) => {
+                console.log('product map', product);
+
+                state.producers[product.producerIndex].products[product.productIndex].addresses.push(product)
+                state.modalShow = false;
+            })
+
         }
     },
     extraReducers: {
@@ -330,6 +331,19 @@ export const producersSlice = createSlice({
                     state.loading = false;
 
                     state.addresses = action.payload.addresses;
+
+            //All products for calculate total qty of products of one type in addresses
+            const allProductsRemain = [];
+            action.payload.producers.map((producer) => {
+                producer.products.map((product) => {
+                    let newProduct = {...product};
+                    newProduct.remainQty = product.offered;
+
+                    allProductsRemain.push(newProduct)
+                })
+            });
+            state.allProductsRestQty = allProductsRemain;
+
 
             console.log('payload Back', action.payload)
         },

@@ -1,11 +1,12 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import './ChangeQuantity.scss'
 import {
-    addProdPriceInTotalCost,
+    addProdPriceInTotalCost, getProducers,
     minusProdPriceInTotalCost,
     setOfferedQty
 } from "../../redux/features/producers/producersSlice";
+import {setRestProduct} from "../../redux/features/changeQuantity/changeQuantitySlice";
 
 
 const ChangeQuantity = ({productDataAction}) => {
@@ -18,6 +19,10 @@ const ChangeQuantity = ({productDataAction}) => {
         useSelector(state => state.producersData.producers[productDataAction.producerIndex].products[productDataAction.productIndex].available)
 
     //console.log('ChangeQuantity productDataAction', maxProductQty)
+
+    const setRestProductHandler = () => {
+        dispatch(setRestProduct())
+    }
 
     const minusProductClickHandler = () => {
          dispatch(minusProdPriceInTotalCost(productDataAction))
@@ -33,11 +38,14 @@ const ChangeQuantity = ({productDataAction}) => {
             dispatch(setOfferedQty(actionData))
     };
 
+    //@TODO add calculating total product qty of product with same ID in allProductsRestQty
+
+
     return (
         <div className="requested-edit">
             <button disabled={offeredProdQty <= 0 ? 'disabled' : ''}
                     className={offeredProdQty <= 0 ? 'disabled' : ''}
-                    onClick={(e) => {e.preventDefault(); minusProductClickHandler ()}}
+                    onClick={(e) => {e.preventDefault(); minusProductClickHandler (); setRestProductHandler()}}
             >-
             </button>
             <input type="number"

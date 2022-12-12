@@ -47,7 +47,8 @@
               {
                 "selected_address_id": 1,
                 "product_id": 101,
-                "product_total_selected": 1
+                "product_total_selected": 1,
+                "offered": 2
               }
             ]
           }

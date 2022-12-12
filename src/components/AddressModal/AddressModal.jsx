@@ -44,6 +44,10 @@ const AddressModal = () => {
        dispatch(setSaveDataAddressModal(actionData))
     };
 
+    const closeAddressModalHandler = () => {
+        dispatch(setHideAddressModal())
+    }
+
     return (
         <div className={showAddressModal ? 'r-address-modal active' : 'r-address-modal hide'}>
             <div className="r-address-modal__content">
@@ -61,10 +65,6 @@ const AddressModal = () => {
                     <div className="destination">
                         <span className="title">Destination</span>
 
-                        {/*<select name="" id="" className="select-address">
-                            <option value="1">Store with Burgundy Wine Bond</option>
-                            <option value="2">Store 2</option>
-                        </select>*/}
                         <DropdownAddressesSelect
                             addresses={dropdownAddressesList}
                         />
@@ -117,7 +117,11 @@ const AddressModal = () => {
                         Cancel
                     </a>
                     <a className="save modal-btn"
-                       onClick={(e) => {e.preventDefault(); saveDataAddressModal()}}
+                       onClick={(e) => {e.preventDefault();
+                                        saveDataAddressModal();
+                                        closeAddressModalHandler();
+                       }
+                       }
                     >
                         Save
                     </a>
